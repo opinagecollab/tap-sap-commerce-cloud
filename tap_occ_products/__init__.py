@@ -4,8 +4,9 @@ import json
 import singer
 
 from singer import utils, metadata
+from tap_occ_products.client.occ_client import OccClient
 
-REQUIRED_CONFIG_KEYS = ["start_date", "username", "password"]
+REQUIRED_CONFIG_KEYS = ["scheme", "baseUrl", "basePath", "baseSite"]
 LOGGER = singer.get_logger()
 
 
@@ -80,7 +81,11 @@ def sync(config, state, catalog):
         stream_schema = stream['schema']
         if stream_id in selected_stream_ids:
             # TODO: sync code for stream goes here...
-            print('Syncing stream:' + stream_id)
+            occ_client = OccClient(config)
+
+            print('Config: {}'.format(config))
+            print('Syncing stream: {}'.format(stream_id))
+            print('Products: {}'.format(occ_client.get_products()))
     return
 
 
