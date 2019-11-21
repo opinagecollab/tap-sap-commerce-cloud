@@ -1,0 +1,591 @@
+{
+	"definitions": {
+		"Category": {
+			"type": "object",
+			"properties": {
+				"code": {
+					"type": "string",
+					"description": "Code of the category"
+				},
+				"image": {
+					"description": "Category image",
+					"originalRef": "Image",
+					"$ref": "#/definitions/Image"
+				},
+				"name": {
+					"type": "string",
+					"description": "Name of the category"
+				},
+				"url": {
+					"type": "string",
+					"description": "URL of the category"
+				}
+			},
+			"title": "Category",
+			"description": "Representation of a Category"
+		},
+		"Classification": {
+			"type": "object",
+			"properties": {
+				"code": {
+					"type": "string",
+					"description": "Code of the classification"
+				},
+				"features": {
+					"type": "array",
+					"description": "List of features for given classification",
+					"items": {
+						"originalRef": "Feature",
+						"$ref": "#/definitions/Feature"
+					}
+				},
+				"name": {
+					"type": "string",
+					"description": "Name of the classification"
+				}
+			},
+			"title": "Classification",
+			"description": "Representation of a Classification"
+		},
+		"Currency": {
+			"type": "object",
+			"properties": {
+				"active": {
+					"type": "boolean",
+					"description": "Boolean flag whether currency is active"
+				},
+				"isocode": {
+					"type": "string",
+					"description": "Code of the currency in iso format"
+				},
+				"name": {
+					"type": "string",
+					"description": "Name of the currency"
+				},
+				"symbol": {
+					"type": "string",
+					"description": "Symbol of the currency"
+				}
+			},
+			"title": "Currency",
+			"description": "Representation of a Currency"
+		},
+		"Feature": {
+			"type": "object",
+			"properties": {
+				"code": {
+					"type": "string",
+					"description": "Code of the feature"
+				},
+				"comparable": {
+					"type": "boolean",
+					"description": "Flag defining it feature is comparable"
+				},
+				"description": {
+					"type": "string",
+					"description": "Description of the feature"
+				},
+				"featureUnit": {
+					"description": "Feature unit",
+					"originalRef": "FeatureUnit",
+					"$ref": "#/definitions/FeatureUnit"
+				},
+				"featureValues": {
+					"type": "array",
+					"description": "List of feature values",
+					"items": {
+						"originalRef": "FeatureValue",
+						"$ref": "#/definitions/FeatureValue"
+					}
+				},
+				"name": {
+					"type": "string",
+					"description": "Name of the feature"
+				},
+				"range": {
+					"type": "boolean",
+					"description": "Range number of the feature"
+				},
+				"type": {
+					"type": "string",
+					"description": "Type of the feature"
+				}
+			},
+			"title": "Feature",
+			"description": "Representation of a Feature"
+		},
+		"FeatureUnit": {
+			"type": "object",
+			"properties": {
+				"name": {
+					"type": "string",
+					"description": "Name of the feature unit"
+				},
+				"symbol": {
+					"type": "string",
+					"description": "Symbol of the feature unit"
+				},
+				"unitType": {
+					"type": "string",
+					"description": "Type of the feature unit"
+				}
+			},
+			"title": "FeatureUnit",
+			"description": "Representation of a Feature Unit"
+		},
+		"FeatureValue": {
+			"type": "object",
+			"properties": {
+				"value": {
+					"type": "string",
+					"description": "Value of the feature"
+				}
+			},
+			"title": "FeatureValue",
+			"description": "Representation of a Feature Value"
+		},
+		"FutureStock": {
+			"type": "object",
+			"properties": {
+				"date": {
+					"type": "string",
+					"format": "date-time",
+					"description": "Date of future stock"
+				},
+				"formattedDate": {
+					"type": "string",
+					"description": "Date of future stock expressed in text value"
+				},
+				"stock": {
+					"description": "Stock information of future stock",
+					"originalRef": "Stock",
+					"$ref": "#/definitions/Stock"
+				}
+			},
+			"title": "FutureStock",
+			"description": "Representation of a Future Stock"
+		},
+		"Image": {
+			"type": "object",
+			"properties": {
+				"altText": {
+					"type": "string",
+					"description": "Tooltip content which is visible while image mouse hovering"
+				},
+				"format": {
+					"type": "string",
+					"description": "Format of the image, can be zoom, product, thumbnail, store, cartIcon, etc."
+				},
+				"galleryIndex": {
+					"type": "integer",
+					"format": "int32",
+					"description": "Index of the image while displayed in gallery"
+				},
+				"imageType": {
+					"type": "string",
+					"description": "Type of the image, can be PRIMARY or GALLERY",
+					"enum": ["PRIMARY", "GALLERY"]
+				},
+				"url": {
+					"type": "string",
+					"description": "URL address of the image"
+				}
+			},
+			"title": "Image",
+			"description": "Representation of an Image"
+		},
+		"Price": {
+			"type": "object",
+			"properties": {
+				"currencyIso": {
+					"type": "string",
+					"description": "Currency iso format"
+				},
+				"formattedValue": {
+					"type": "string",
+					"description": "Value of price formatted"
+				},
+				"maxQuantity": {
+					"type": "integer",
+					"format": "int64",
+					"description": "Maximum quantity of the price value"
+				},
+				"minQuantity": {
+					"type": "integer",
+					"format": "int64",
+					"description": "Minimum quantity of the price value"
+				},
+				"priceType": {
+					"type": "string",
+					"description": "Type of the price",
+					"enum": ["BUY", "FROM"]
+				},
+				"value": {
+					"type": "number",
+					"description": "Value of price in BigDecimal format"
+				}
+			},
+			"title": "Price",
+			"description": "Representation of a Price"
+		},
+		"PriceRange": {
+			"type": "object",
+			"properties": {
+				"maxPrice": {
+					"description": "Maximum value of the Price Range",
+					"originalRef": "Price",
+					"$ref": "#/definitions/Price"
+				},
+				"minPrice": {
+					"description": "Minimum value of the Price Range",
+					"originalRef": "Price",
+					"$ref": "#/definitions/Price"
+				}
+			},
+			"title": "PriceRange",
+			"description": "Representation of a Price Range"
+		},
+		"Product": {
+			"type": "object",
+			"additionalProperties": false,
+			"properties": {
+				"availableForPickup": {
+					"type": "boolean",
+					"description": "Flag defining if product is available for pickup"
+				},
+				"averageRating": {
+					"type": "number",
+					"format": "double",
+					"description": "Rating number of average value"
+				},
+				"baseProduct": {
+					"type": "string",
+					"description": "Information about base product"
+				},
+				"categories": {
+					"type": "array",
+					"description": "List of categories product belongs to",
+					"items": {
+						"originalRef": "Category",
+						"$ref": "#/definitions/Category"
+					}
+				},
+				"classifications": {
+					"type": "array",
+					"description": "List of classifications related to the product",
+					"items": {
+						"originalRef": "Classification",
+						"$ref": "#/definitions/Classification"
+					}
+				},
+				"code": {
+					"type": "string",
+					"description": "Code of the product"
+				},
+				"configurable": {
+					"type": "boolean",
+					"description": "Flag stating if product is configurable"
+				},
+				"configuratorType": {
+					"type": "string",
+					"description": "Configurator type related to the product"
+				},
+				"description": {
+					"type": "string",
+					"description": "Description of the product"
+				},
+				"futureStocks": {
+					"type": "array",
+					"description": "List of future stocks",
+					"items": {
+						"originalRef": "FutureStock",
+						"$ref": "#/definitions/FutureStock"
+					}
+				},
+				"images": {
+					"type": "array",
+					"description": "List of images linked to product",
+					"items": {
+						"originalRef": "Image",
+						"$ref": "#/definitions/Image"
+					}
+				},
+				"manufacturer": {
+					"type": "string",
+					"description": "Data of product manufacturer"
+				},
+				"multidimensional": {
+					"type": "boolean",
+					"description": "Flag stating if product is multidimensional"
+				},
+				"name": {
+					"type": "string",
+					"description": "Name of the product"
+				},
+				"numberOfReviews": {
+					"type": "integer",
+					"format": "int32",
+					"description": "Number of reviews associated with the product"
+				},
+				"potentialPromotions": {
+					"type": "array",
+					"description": "List of potential promotions related to the product",
+					"items": {
+						"originalRef": "Promotion",
+						"$ref": "#/definitions/Promotion"
+					}
+				},
+				"price": {
+					"description": "Price of the product",
+					"originalRef": "Price",
+					"$ref": "#/definitions/Price"
+				},
+				"priceRange": {
+					"description": "Price range assigned to the product",
+					"originalRef": "PriceRange",
+					"$ref": "#/definitions/PriceRange"
+				},
+				"productReferences": {
+					"type": "array",
+					"description": "List of product references",
+					"items": {
+						"originalRef": "ProductReference",
+						"$ref": "#/definitions/ProductReference"
+					}
+				},
+				"purchasable": {
+					"type": "boolean",
+					"description": "Flag defining if product is purchasable"
+				},
+				"reviews": {
+					"type": "array",
+					"description": "List of reviews associated with the product",
+					"items": {
+						"originalRef": "Review",
+						"$ref": "#/definitions/Review"
+					}
+				},
+				"stock": {
+					"description": "Stock value of the product",
+					"originalRef": "Stock",
+					"$ref": "#/definitions/Stock"
+				},
+				"summary": {
+					"type": "string",
+					"description": "Product summary"
+				},
+				"tags": {
+					"type": "array",
+					"description": "Tags associated with the product",
+					"items": {
+						"type": "string"
+					}
+				},
+				"url": {
+					"type": "string",
+					"description": "Url address of the product"
+				},
+				"volumePrices": {
+					"type": "array",
+					"description": "List of volume prices",
+					"items": {
+						"originalRef": "Price",
+						"$ref": "#/definitions/Price"
+					}
+				},
+				"volumePricesFlag": {
+					"type": "boolean",
+					"description": "Flag stating if volume price should be displayed"
+				}
+			},
+			"title": "Product",
+			"description": "Representation of a Product"
+		},
+		"ProductReference": {
+			"type": "object",
+			"properties": {
+				"description": {
+					"type": "string",
+					"description": "Reference description"
+				},
+				"preselected": {
+					"type": "boolean",
+					"description": "Flag stating if product reference is preselected"
+				},
+				"quantity": {
+					"type": "integer",
+					"format": "int32",
+					"description": "Reference quantity"
+				},
+				"referenceType": {
+					"type": "string",
+					"description": "Reference type"
+				},
+				"target": {
+					"description": "Target product",
+					"originalRef": "Product",
+					"$ref": "#/definitions/Product"
+				}
+			},
+			"title": "ProductReference",
+			"description": "Representation of a Product Reference"
+		},
+		"Promotion": {
+			"type": "object",
+			"properties": {
+				"code": {
+					"type": "string",
+					"description": "Code of the promotion"
+				},
+				"couldFireMessages": {
+					"type": "array",
+					"description": "Message about promotion which is displayed when planning potential promotion. This field has higher priority over promotion description",
+					"items": {
+						"type": "string"
+					}
+				},
+				"description": {
+					"type": "string",
+					"description": "Description of the promotion"
+				},
+				"enabled": {
+					"type": "boolean",
+					"description": "Boolean flag if promotion is enabled"
+				},
+				"endDate": {
+					"type": "string",
+					"format": "date-time",
+					"description": "Last date of validity of the promotion"
+				},
+				"firedMessages": {
+					"type": "array",
+					"description": "Message fired while the promotion is active. This is info how much you will get when applying the promotion",
+					"items": {
+						"type": "string"
+					}
+				},
+				"priority": {
+					"type": "integer",
+					"format": "int32",
+					"description": "Priority index as numeric value of the promotion. Higher number means higher priority"
+				},
+				"productBanner": {
+					"description": "Image banner of the promotion",
+					"originalRef": "Image",
+					"$ref": "#/definitions/Image"
+				},
+				"promotionGroup": {
+					"type": "string",
+					"description": "Group of the promotion"
+				},
+				"promotionType": {
+					"type": "string",
+					"description": "Type of the promotion"
+				},
+				"restrictions": {
+					"type": "array",
+					"description": "List of promotion restrictions",
+					"items": {
+						"originalRef": "PromotionRestriction",
+						"$ref": "#/definitions/PromotionRestriction"
+					}
+				},
+				"startDate": {
+					"type": "string",
+					"format": "date-time",
+					"description": "The initial date of the promotion"
+				},
+				"title": {
+					"type": "string",
+					"description": "Promotion title"
+				}
+			},
+			"title": "Promotion",
+			"description": "Representation of a Promotion"
+		},
+		"PromotionRestriction": {
+			"type": "object",
+			"properties": {
+				"description": {
+					"type": "string",
+					"description": "Description of the promotion restriction"
+				},
+				"restrictionType": {
+					"type": "string",
+					"description": "Type of the promotion restriction"
+				}
+			},
+			"title": "PromotionRestriction",
+			"description": "Representation of a Promotion Restriction"
+		},
+		"Review": {
+			"type": "object",
+			"properties": {
+				"alias": {
+					"type": "string",
+					"description": "Alias name for the review"
+				},
+				"comment": {
+					"type": "string",
+					"description": "Review comment"
+				},
+				"date": {
+					"type": "string",
+					"format": "date-time",
+					"description": "Date of the review"
+				},
+				"headline": {
+					"type": "string",
+					"description": "Review headline"
+				},
+				"id": {
+					"type": "string",
+					"description": "Identifier of review"
+				},
+				"principal": {
+					"description": "Person related to the review",
+					"originalRef": "User",
+					"$ref": "#/definitions/User"
+				},
+				"rating": {
+					"type": "number",
+					"format": "double",
+					"description": "Review rating value"
+				}
+			},
+			"title": "Review",
+			"description": "Representation of a Review"
+		},
+		"Stock": {
+			"type": "object",
+			"properties": {
+				"stockLevel": {
+					"type": "integer",
+					"format": "int64",
+					"description": "Stock level expressed as number"
+				},
+				"stockLevelStatus": {
+					"type": "string",
+					"description": "Status of stock level"
+				}
+			},
+			"title": "Stock",
+			"description": "Representation of a Stock"
+		},
+		"User": {
+			"type": "object",
+			"properties": {
+				"name": {
+					"type": "string",
+					"description": "Name of the user"
+				},
+				"uid": {
+					"type": "string",
+					"description": "Unique user identifier"
+				}
+			},
+			"title": "User",
+			"description": "Representation of an User"
+		}
+	}
+}
