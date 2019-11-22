@@ -1,0 +1,6 @@
+{
+  "scheme": "https",
+  "baseUrl": "localhost:9002",
+  "basePath": "/rest/v2",
+  "baseSite": "/electronics"
+}
