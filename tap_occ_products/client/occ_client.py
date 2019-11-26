@@ -2,6 +2,7 @@ from urllib.parse import urlunparse
 
 import singer
 import requests
+import urllib3
 
 LOGGER = singer.get_logger()
 
@@ -12,9 +13,9 @@ class OccClient:
 
     def __init__(self, config):
         self.scheme = config['scheme']
-        self.base_url = config['baseUrl']
-        self.base_path = config['basePath']
-        self.base_site = config['baseSite']
+        self.base_url = config['base_url']
+        self.base_path = config['base_path']
+        self.base_site = config['base_site']
 
         self.search_url = urlunparse((
             self.scheme, self.base_url, self.base_path + self.base_site + self.PRODUCT_SEARCH_PATH, None, None, None
@@ -23,6 +24,8 @@ class OccClient:
         self.product_url = urlunparse((
             self.scheme, self.base_url, self.base_path + self.base_site + self.PRODUCT_PATH, None, None, None
         ))
+
+        urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
     def get_products(self):
         initial_page = 0

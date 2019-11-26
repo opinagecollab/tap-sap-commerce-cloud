@@ -1,6 +1,6 @@
 {
   "scheme": "https",
-  "baseUrl": "localhost:9002",
-  "basePath": "/rest/v2",
-  "baseSite": "/electronics"
+  "base_url": "localhost:9002",
+  "base_path": "/rest/v2",
+  "base_site": "/electronics"
 }
