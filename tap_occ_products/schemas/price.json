@@ -1,0 +1,21 @@
+{
+  "type": "object",
+  "properties": {
+    "code": {
+      "type": "string"
+    },
+    "currencyIso": {
+      "type": "string"
+    },
+    "formattedValue": {
+      "type": "string"
+    },
+    "priceType": {
+      "type": "string"
+    },
+    "value": {
+      "type": "number"
+    }
+  },
+  "additionalProperties": false
+}

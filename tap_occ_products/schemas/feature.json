@@ -1,0 +1,30 @@
+{
+  "type": "object",
+  "properties": {
+    "code": {
+      "type": "string"
+    },
+    "comparable": {
+      "type": "boolean"
+    },
+    "description": {
+      "type":  "string"
+    },
+    "name": {
+      "type":  "string"
+    },
+    "range": {
+      "type": "boolean"
+    },
+    "type": {
+      "type": "string"
+    },
+    "unitCode": {
+      "type": "string"
+    },
+    "classificationCode": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": false
+}
