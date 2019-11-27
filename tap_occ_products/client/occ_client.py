@@ -27,31 +27,31 @@ class OccClient:
 
         urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
-    def get_products(self):
+    def fetch_products(self):
         initial_page = 0
         products = []
 
-        response = self.get_product_list(initial_page)
+        response = self.fetch_product_list(initial_page)
         for product in response['products']:
-            products.append(self.get_product_details(product['code']))
+            products.append(self.fetch_product_details(product['code']))
 
         for page in range(1, response['pagination']['totalPages']):
-            response = self.get_product_list(page)
+            response = self.fetch_product_list(page)
             for product in response['products']:
-                products.append(self.get_product_details(product['code']))
+                products.append(self.fetch_product_details(product['code']))
 
         return products
 
-    def get_product_list(self, page):
-        response = requests.get(self.search_url.format(page), verify=False)
+    def fetch_product_list(self, page):
+        response = requests.get(self.search_url.format(page), verify=False, timeout=10)
 
         if response.status_code != 200:
             raise Exception('Failed to fetch product list with status code: {}'.format(response.status_code))
 
         return response.json()
 
-    def get_product_details(self, sku):
-        response = requests.get(self.product_url.format(sku), verify=False)
+    def fetch_product_details(self, sku):
+        response = requests.get(self.product_url.format(sku), verify=False, timeout=10)
         if response.status_code != 200:
             raise Exception('Failed to fetch product details with status code: {}'.format(response.status_code))
 
