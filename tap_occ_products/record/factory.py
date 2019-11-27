@@ -3,11 +3,10 @@ from tap_occ_products.record.handler.category_handler import CategoryHandler
 from tap_occ_products.record.handler.classification_handler import ClassificationHandler
 from tap_occ_products.record.handler.feature_handler import FeatureHandler
 from tap_occ_products.record.handler.feature_unit_handler import FeatureUnitHandler
-from tap_occ_products.record.handler.feature_value_handler import FeatureValueHandler
 from tap_occ_products.record.handler.price_handler import PriceHandler
 from tap_occ_products.record.handler.product_handler import ProductHandler
 from tap_occ_products.record.handler.product_category_handler import ProductCategoryHandler
-from tap_occ_products.record.handler.product_classification_handler import ProductClassificationHandler
+from tap_occ_products.record.handler.product_feature_handler import ProductFeatureHandler
 
 
 def build_record_handler(record: Record):
@@ -23,9 +22,6 @@ def build_record_handler(record: Record):
     if record == Record.FEATURE_UNIT:
         return FeatureUnitHandler.get_instance()
 
-    if record == Record.FEATURE_VALUE:
-        return FeatureValueHandler.get_instance()
-
     if record == Record.PRICE:
         return PriceHandler.get_instance()
 
@@ -36,4 +32,4 @@ def build_record_handler(record: Record):
         return ProductCategoryHandler.get_instance()
 
     if record == Record.PRODUCT_CLASSIFICATION:
-        return ProductClassificationHandler.get_instance()
+        return ProductFeatureHandler.get_instance()

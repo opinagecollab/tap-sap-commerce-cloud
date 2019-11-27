@@ -4,7 +4,10 @@
     "productCode": {
       "type": "string"
     },
-    "classificationCode": {
+    "featureCode": {
+      "type": "string"
+    },
+    "featureValue": {
       "type": "string"
     }
   },
