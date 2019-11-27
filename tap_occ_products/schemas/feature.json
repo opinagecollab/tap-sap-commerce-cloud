@@ -5,19 +5,19 @@
       "type": "string"
     },
     "comparable": {
-      "type": "boolean"
+      "type": ["null", "boolean"]
     },
     "description": {
-      "type":  "string"
+      "type":  ["null", "string"]
     },
     "name": {
-      "type":  "string"
+      "type":  ["null", "string"]
     },
     "range": {
-      "type": "boolean"
+      "type": ["null", "boolean"]
     },
     "type": {
-      "type": "string"
+      "type": ["null", "string"]
     },
     "unitCode": {
       "type": "string"

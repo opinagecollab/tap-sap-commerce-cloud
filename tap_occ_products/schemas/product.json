@@ -2,38 +2,37 @@
   "type": "object",
   "properties": {
     "availableForPickup": {
-      "type": "boolean"
+      "type": ["null", "boolean"]
     },
     "averageRating": {
-      "type": "number",
-      "format": "double"
+      "type": ["null", "number"]
     },
     "code": {
       "type": "string"
     },
     "description": {
-      "type": "string"
+      "type": ["null", "string"]
     },
     "manufacturer": {
-      "type": "string"
+      "type": ["null", "string"]
     },
     "name": {
-      "type": "string"
+      "type": ["null", "string"]
     },
     "numberOfReviews": {
-      "type": "number"
+      "type": ["null", "number"]
     },
     "priceCode": {
       "type": "string"
     },
-    "stock": {
-      "type": "number"
+    "stockCode": {
+      "type": "string"
     },
     "summary": {
-      "type": "string"
+      "type": ["null", "string"]
     },
     "url": {
-      "type": "string"
+      "type": ["null", "string"]
     }
   },
   "additionalProperties": false

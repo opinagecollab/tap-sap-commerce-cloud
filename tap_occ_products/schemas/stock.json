@@ -1,13 +1,13 @@
 {
   "type": "object",
   "properties": {
-    "productCode": {
+    "code": {
       "type": "string"
     },
-    "featureCode": {
-      "type": "string"
+    "stockLevel": {
+      "type": ["null", "number"]
     },
-    "featureValue": {
+    "stockLevelStatus": {
       "type": ["null", "string"]
     }
   },

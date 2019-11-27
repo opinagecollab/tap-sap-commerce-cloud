@@ -2,10 +2,10 @@
   "type": "object",
   "properties": {
     "name": {
-      "type": "string"
+      "type": ["null", "string"]
     },
     "symbol": {
-      "type": "string"
+      "type": ["null", "string"]
     },
     "unitType": {
       "type": "string"

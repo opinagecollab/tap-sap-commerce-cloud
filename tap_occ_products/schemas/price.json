@@ -5,16 +5,16 @@
       "type": "string"
     },
     "currencyIso": {
-      "type": "string"
+      "type": ["null", "string"]
     },
     "formattedValue": {
-      "type": "string"
+      "type": ["null", "string"]
     },
     "priceType": {
-      "type": "string"
+      "type": ["null", "string"]
     },
     "value": {
-      "type": "number"
+      "type": ["null" ,"number"]
     }
   },
   "additionalProperties": false
