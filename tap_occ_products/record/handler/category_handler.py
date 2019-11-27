@@ -6,4 +6,8 @@ from tap_occ_products.record.handler.decorators import Singleton
 class CategoryHandler(BaseHandler):
 
     def generate(self, category, **options):
-        return None
+        return {
+            'code': category['code'],
+            'name': category['name'],
+            'url': category['url']
+        }

@@ -6,7 +6,7 @@ from tap_occ_products.record.record import Record
 
 class TestProductHandler(unittest.TestCase):
 
-    def test_should_generate_product(self):
+    def test_should_generate_product_record(self):
         products = [
             build_record_handler(Record.PRODUCT).generate(
                 {
