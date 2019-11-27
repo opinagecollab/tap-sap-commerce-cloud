@@ -8,6 +8,9 @@
       "type": "number",
       "format": "double"
     },
+    "code": {
+      "type": "string"
+    },
     "description": {
       "type": "string"
     },
