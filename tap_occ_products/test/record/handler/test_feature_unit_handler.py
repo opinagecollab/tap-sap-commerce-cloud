@@ -32,3 +32,11 @@ class TestFeatureUnit(unittest.TestCase):
                 'unitType': '234'
             }
         ])
+
+    def test_should_ignore_handled_feature_unit_record(self):
+        self.assertIsNone(build_record_handler(Record.FEATURE_UNIT).generate(
+            {
+                'name': 'grams',
+                'symbol': 'g',
+                'unitType': '123'
+            }))

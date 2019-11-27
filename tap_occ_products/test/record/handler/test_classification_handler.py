@@ -28,3 +28,10 @@ class TestClassificationHandler(unittest.TestCase):
                 'name': 'Compatible memory cards'
             }
         ])
+
+    def test_should_ignore_handled_classification_record(self):
+        self.assertIsNone(build_record_handler(Record.CLASSIFICATION).generate(
+            {
+                'code': '234',
+                'name': 'Compatible memory cards'
+            }))

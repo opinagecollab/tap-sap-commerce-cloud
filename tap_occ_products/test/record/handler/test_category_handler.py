@@ -36,3 +36,11 @@ class TestCategoryHandler(unittest.TestCase):
             }
         ])
 
+    def test_should_ignore_handled_category_record(self):
+        self.assertIsNone(build_record_handler(Record.CATEGORY).generate(
+            {
+                'code': '1234',
+                'name': 'laptops',
+                'url': '/laptops'
+            }))
+
