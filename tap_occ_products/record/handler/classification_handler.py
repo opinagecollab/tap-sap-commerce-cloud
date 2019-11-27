@@ -7,4 +7,7 @@ class ClassificationHandler(BaseHandler):
     _handled_codes = []
 
     def generate(self, classification, **options):
-        return None
+        return {
+            'code': classification['code'],
+            'name': classification['name']
+        }
