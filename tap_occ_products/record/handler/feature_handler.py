@@ -13,12 +13,12 @@ class FeatureHandler(BaseHandler):
         self._handled_codes.append(feature['code'])
 
         return {
-            'code': feature['code'],
-            'comparable': feature['comparable'],
-            'description': feature['description'],
-            'name': feature['name'],
-            'range': feature['range'],
-            'type': feature['type'],
+            'code': feature.get('code'),
+            'comparable': feature.get('comparable'),
+            'description': feature.get('description'),
+            'name': feature.get('name'),
+            'range': feature.get('range'),
+            'type': feature.get('type'),
             'classificationCode': options['classification_code'],
             'unitCode': options['unit_code']
         }

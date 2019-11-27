@@ -10,9 +10,9 @@ class PriceHandler(BaseHandler):
         self._code += 1
 
         return {
-            'code': self._code,
-            'currencyIso': price['currencyIso'],
-            'formattedValue': price['formattedValue'],
-            'priceType': price['priceType'],
-            'value': price['value']
+            'code': str(self._code),
+            'currencyIso': price.get('currencyIso'),
+            'formattedValue': price.get('formattedValue'),
+            'priceType': price.get('priceType'),
+            'value': price.get('value')
         }

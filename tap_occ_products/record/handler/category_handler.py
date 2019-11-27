@@ -13,7 +13,7 @@ class CategoryHandler(BaseHandler):
         self._handled_codes.append(category['code'])
 
         return {
-            'code': category['code'],
-            'name': category['name'],
-            'url': category['url']
+            'code': category.get('code'),
+            'name': category.get('name'),
+            'url': category.get('url')
         }

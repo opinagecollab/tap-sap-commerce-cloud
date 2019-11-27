@@ -7,15 +7,15 @@ class ProductHandler(BaseHandler):
 
     def generate(self, product, **options):
         return {
-            'availableForPickup': product['availableForPickup'],
-            'averageRating': product['averageRating'],
-            'code': product['code'],
-            'description': product['description'],
-            'manufacturer': product['manufacturer'],
-            'name': product['name'],
-            'numberOfReviews': product['numberOfReviews'],
+            'availableForPickup': product.get('availableForPickup'),
+            'averageRating': product.get('averageRating'),
+            'code': product.get('code'),
+            'description': product.get('description'),
+            'manufacturer': product.get('manufacturer'),
+            'name': product.get('name'),
+            'numberOfReviews': product.get('numberOfReviews'),
+            'summary': product.get('summary'),
+            'url': product.get('url'),
             'priceCode': options['price_code'],
-            'stock': product['stock'],
-            'summary': product['summary'],
-            'url': product['url']
+            'stockCode': options['stock_code']
         }

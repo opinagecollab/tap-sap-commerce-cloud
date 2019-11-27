@@ -48,5 +48,5 @@ class TestOccClient(unittest.TestCase):
 
             product_list.append(product_details[sku])
 
-        result = self.client.get_products()
+        result = self.client.fetch_products()
         self.assertEqual(product_list, result)

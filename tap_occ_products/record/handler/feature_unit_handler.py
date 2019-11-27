@@ -13,7 +13,7 @@ class FeatureUnitHandler(BaseHandler):
         self._handled_unit_types.append(feature_unit['unitType'])
 
         return {
-            'name': feature_unit['name'],
-            'symbol': feature_unit['symbol'],
-            'unitType': feature_unit['unitType']
+            'name': feature_unit.get('name'),
+            'symbol': feature_unit.get('symbol'),
+            'unitType': feature_unit.get('unitType')
         }

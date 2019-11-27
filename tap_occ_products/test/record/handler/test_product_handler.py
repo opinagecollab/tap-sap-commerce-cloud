@@ -17,11 +17,11 @@ class TestProductHandler(unittest.TestCase):
                     'manufacturer': 'Sony',
                     'name': 'Sony Product',
                     'numberOfReviews': 12,
-                    'stock': 10,
                     'summary': 'Product summary',
                     'url': 'http://product.url'
                 },
-                price_code=1
+                price_code='1',
+                stock_code='1'
             ),
             build_record_handler(Record.PRODUCT).generate(
                 {
@@ -32,11 +32,11 @@ class TestProductHandler(unittest.TestCase):
                     'manufacturer': 'Apple',
                     'name': 'Apple Product',
                     'numberOfReviews': 32,
-                    'stock': 9,
                     'summary': 'Product summary',
                     'url': 'http://product.url'
                 },
-                price_code=2
+                price_code='2',
+                stock_code='2'
             )
         ]
 
@@ -49,10 +49,10 @@ class TestProductHandler(unittest.TestCase):
                 'manufacturer': 'Sony',
                 'name': 'Sony Product',
                 'numberOfReviews': 12,
-                'stock': 10,
                 'summary': 'Product summary',
                 'url': 'http://product.url',
-                'priceCode': 1
+                'priceCode': '1',
+                'stockCode': '1'
             },
             {
                 'code': '234567',
@@ -62,9 +62,9 @@ class TestProductHandler(unittest.TestCase):
                 'manufacturer': 'Apple',
                 'name': 'Apple Product',
                 'numberOfReviews': 32,
-                'priceCode': 2,
-                'stock': 9,
                 'summary': 'Product summary',
-                'url': 'http://product.url'
+                'url': 'http://product.url',
+                'priceCode': '2',
+                'stockCode': '2'
             }
         ])

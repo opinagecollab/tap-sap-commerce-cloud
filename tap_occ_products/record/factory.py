@@ -7,6 +7,7 @@ from tap_occ_products.record.handler.price_handler import PriceHandler
 from tap_occ_products.record.handler.product_handler import ProductHandler
 from tap_occ_products.record.handler.product_category_handler import ProductCategoryHandler
 from tap_occ_products.record.handler.product_feature_handler import ProductFeatureHandler
+from tap_occ_products.record.handler.stock_handler import StockHandler
 
 
 def build_record_handler(record: Record):
@@ -31,5 +32,8 @@ def build_record_handler(record: Record):
     if record == Record.PRODUCT_CATEGORY:
         return ProductCategoryHandler.get_instance()
 
-    if record == Record.PRODUCT_CLASSIFICATION:
+    if record == Record.PRODUCT_FEATURE:
         return ProductFeatureHandler.get_instance()
+
+    if record == Record.STOCK:
+        return StockHandler.get_instance()

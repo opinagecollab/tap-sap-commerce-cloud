@@ -9,5 +9,5 @@ class Record(Enum):
     PRICE = 'price'
     PRODUCT = 'product'
     PRODUCT_CATEGORY = 'product_category'
-    PRODUCT_CLASSIFICATION = 'product_classification'
-
+    PRODUCT_FEATURE = 'product_feature'
+    STOCK = 'stock'

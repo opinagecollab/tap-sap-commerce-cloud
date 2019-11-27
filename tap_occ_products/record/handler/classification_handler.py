@@ -13,6 +13,6 @@ class ClassificationHandler(BaseHandler):
         self._handled_codes.append(classification['code'])
 
         return {
-            'code': classification['code'],
-            'name': classification['name']
+            'code': classification.get('code'),
+            'name': classification.get('name')
         }

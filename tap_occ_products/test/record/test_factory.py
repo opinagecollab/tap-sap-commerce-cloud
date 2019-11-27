@@ -43,6 +43,6 @@ class TestFactory(unittest.TestCase):
         product_category_handler = build_record_handler(Record.PRODUCT_CATEGORY)
         self.assertTrue(isinstance(product_category_handler, ProductCategoryHandler))
 
-    def test_should_build_product_classification_handler(self):
-        product_classification_handler = build_record_handler(Record.PRODUCT_CLASSIFICATION)
-        self.assertTrue(isinstance(product_classification_handler, ProductFeatureHandler))
+    def test_should_build_product_feature_handler(self):
+        product_feature_handler = build_record_handler(Record.PRODUCT_FEATURE)
+        self.assertTrue(isinstance(product_feature_handler, ProductFeatureHandler))

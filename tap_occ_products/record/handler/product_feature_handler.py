@@ -7,7 +7,7 @@ class ProductFeatureHandler(BaseHandler):
 
     def generate(self, product_feature, **options):
         return {
-            'productCode': product_feature['productCode'],
-            'featureCode': product_feature['featureCode'],
-            'featureValue': product_feature['featureValue']
+            'productCode': product_feature.get('productCode'),
+            'featureCode': product_feature.get('featureCode'),
+            'featureValue': product_feature.get('featureValue')
         }

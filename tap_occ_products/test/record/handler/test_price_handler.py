@@ -24,13 +24,13 @@ class TestPriceHandler(unittest.TestCase):
 
         self.assertEqual(prices, [
             {
-                'code': 1,
+                'code': '1',
                 'currencyIso': 'USD',
                 'formattedValue': '$260.87',
                 'priceType': 'BUY',
                 'value': 260.87
             }, {
-                'code': 2,
+                'code': '2',
                 'currencyIso': 'CAD',
                 'formattedValue': '130.99',
                 'priceType': 'BUY',
