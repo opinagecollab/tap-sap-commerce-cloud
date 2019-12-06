@@ -6,7 +6,7 @@ spec](https://github.com/singer-io/getting-started/blob/master/SPEC.md).
 
 This tap:
 
-- Pulls raw data from any OCC instance.
+- Pulls raw data from any SAP Commerce Suite instance.
 - Extracts the following product resources [ detailed data model [below](#product-data-model) ]:
   - descriptions
   - prices
@@ -59,6 +59,90 @@ Sample configuration is currently stored in the `./sample_config.json` file.
     ```
    
 5. For more information read [this](https://github.com/singer-io/getting-started). 
+
+<br>
+
+### Adding the tap to Meltano
+
+1. Make sure your Meltano virtual environment is activated
+
+2. Install the tap to your local Meltano virtual environment
+    ```bash
+    $ pip install -e /path/to/tap/source/code
+    ```
+
+3. Add the tap to your Meltano project
+    ```bash
+    $ meltano add --custom extractor tap-occ-products
+    
+       ...
+    > namespace: tap_occ_products
+    > pip_url: -e /absolute/path/to/tap/source/code
+    > executable: tap-occ-products
+    > capabilities: 
+    ```
+   
+   The project `meltano.yml` file should now contain the tap configuration
+   ```yaml
+    plugins:
+       extractors:
+           ...
+          - capabilities: []
+            executable: tap-occ-products
+            name: tap-occ-products
+            namespace: tap_occ_products
+            pip_url: -e tap-occ-products
+    ```
+   
+4. Add the following tap required settings to the `meltano.yml` file
+    ```yaml
+    plugins:
+       extractors:
+           ...
+          - capabilities: []
+            executable: tap-occ-products
+            name: tap-occ-products
+            namespace: tap_occ_products
+            pip_url: -e tap-occ-products
+            settings:
+            - name: scheme
+              value: https
+            - name: base_url
+              value: localhost:9002
+            - name: base_path
+              value: /rest/v2
+            - name: base_site
+              value: /electronics
+    ```
+
+    The tap should now be available in the project Meltano UI.
+    
+5. Optionally, you can add a description for you tap and Meltano will display it in the UI.
+    ```yaml
+    plugins:
+       extractors:
+           ...
+          - capabilities: []
+            executable: tap-occ-products
+            name: tap-occ-products
+            namespace: tap_occ_products
+            pip_url: -e tap-occ-products
+            settings:
+            - name: scheme
+              value: https
+            - name: base_url
+              value: localhost:9002
+            - name: base_path
+              value: /rest/v2
+            - name: base_site
+              value: /electronics
+            description: SAP Commerce Suite product data extractor
+    ```
+   
+6. Optionally, you can add a logo for your tap by copying it to the Meltano source code:
+   ```bash
+   $ cp ./logo/occ-products-logo.png /path/to/your/meltano/virtual/env/lib/python3.7/site-packages/meltano/api/static/logos
+   ```
 
 <br>
 
