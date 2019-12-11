@@ -159,15 +159,16 @@ def sync(config, state, catalog):
                 if category_record:
                     LOGGER.debug('Writing category record: {}'.format(category_record))
                     singer.write_record(Record.CATEGORY.value, category_record)
-                    LOGGER.debug('Writing product category record: {}'.format({
-                                'productCode': product['code'],
-                                'categoryCode': category_record['code']
-                            }))
-                    singer.write_record(Record.PRODUCT_CATEGORY.value,
-                                        build_record_handler(Record.PRODUCT_CATEGORY).generate({
-                                            'productCode': product['code'],
-                                            'categoryCode': category_record['code']
-                                        }))
+
+                LOGGER.debug('Writing product category record: {}'.format({
+                            'productCode': product['code'],
+                            'categoryCode': category['code']
+                        }))
+                singer.write_record(Record.PRODUCT_CATEGORY.value,
+                                    build_record_handler(Record.PRODUCT_CATEGORY).generate({
+                                        'productCode': product['code'],
+                                        'categoryCode': category['code']
+                                    }))
 
         if 'classifications' in product:
             for classification in product['classifications']:
