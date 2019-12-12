@@ -65,6 +65,12 @@ def discover():
             stream_metadata.append(is_selected)
             stream_key_properties.append('unitType')
 
+        if schema_name == Record.FEATURE_VALUE.value:
+            stream_metadata.append(is_selected)
+            stream_key_properties.append('productCode')
+            stream_key_properties.append('featureCode')
+            stream_key_properties.append('featureValue')
+
         if schema_name == Record.PRICE.value:
             stream_metadata.append(is_selected)
             stream_key_properties.append('code')
@@ -82,7 +88,6 @@ def discover():
             stream_metadata.append(is_selected)
             stream_key_properties.append('productCode')
             stream_key_properties.append('featureCode')
-            stream_key_properties.append('featureValue')
 
         if schema_name == Record.STOCK.value:
             stream_metadata.append(is_selected)
@@ -194,14 +199,21 @@ def sync(config, state, catalog):
                         LOGGER.debug('Writing feature record: {}'.format(feature_record))
                         singer.write_record(Record.FEATURE.value, feature_record)
 
+                    product_feature_record = build_record_handler(Record.PRODUCT_FEATURE).generate({
+                        'productCode': product['code'],
+                        'featureCode': feature['code'],
+                    })
+                    LOGGER.debug('Writing product feature record: {}'.format(product_feature_record))
+                    singer.write_record(Record.PRODUCT_FEATURE.value, product_feature_record)
+
                     for value in feature['featureValues']:
-                        product_feature_record = build_record_handler(Record.PRODUCT_FEATURE).generate({
+                        feature_value_record = build_record_handler(Record.FEATURE_VALUE).generate({
                             'productCode': product['code'],
                             'featureCode': feature['code'],
                             'featureValue': value['value']
                         })
-                        LOGGER.debug('Writing product feature record: {}'.format(product_feature_record))
-                        singer.write_record(Record.PRODUCT_FEATURE.value, product_feature_record)
+                        LOGGER.debug('Writing feature value record: {}'.format(feature_value_record))
+                        singer.write_record(Record.FEATURE_VALUE.value, feature_value_record)
 
     return
 

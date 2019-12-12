@@ -1,4 +1,4 @@
-{
+ {
   "type": "object",
   "properties": {
     "productCode": {
@@ -6,6 +6,9 @@
     },
     "featureCode": {
       "type": "string"
+    },
+    "featureValue": {
+      "type": ["null", "string"]
     }
   },
   "additionalProperties": false
