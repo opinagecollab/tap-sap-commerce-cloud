@@ -3,6 +3,7 @@ import os
 import json
 import singer
 
+from datetime import datetime, timezone
 from singer import utils, metadata
 from tap_occ_products.client.occ_client import OccClient
 from tap_occ_products.record.record import Record
@@ -13,6 +14,8 @@ REQUIRED_CONFIG_KEYS = ['scheme', 'base_url', 'base_path', 'base_site']
 
 LOGGER = singer.get_logger()
 LOGGER.setLevel(level='DEBUG')
+
+TENANT_ID = 't1'
 
 
 def get_abs_path(path):
@@ -51,47 +54,36 @@ def discover():
 
         if schema_name == Record.CATEGORY.value:
             stream_metadata.append(is_selected)
-            stream_key_properties.append('code')
+            stream_key_properties.append('id')
 
-        if schema_name == Record.CLASSIFICATION.value:
+        if schema_name == Record.CUSTOMER_SPECIFIC_PRICE.value:
             stream_metadata.append(is_selected)
-            stream_key_properties.append('code')
+            stream_key_properties.append('customerId')
+            stream_key_properties.append('tenantId')
+            stream_key_properties.append('sku')
 
-        if schema_name == Record.FEATURE.value:
+        if schema_name == Record.PRICE_POINT.value:
             stream_metadata.append(is_selected)
-            stream_key_properties.append('code')
-
-        if schema_name == Record.FEATURE_UNIT.value:
-            stream_metadata.append(is_selected)
-            stream_key_properties.append('unitType')
-
-        if schema_name == Record.FEATURE_VALUE.value:
-            stream_metadata.append(is_selected)
-            stream_key_properties.append('productCode')
-            stream_key_properties.append('featureCode')
-            stream_key_properties.append('featureValue')
-
-        if schema_name == Record.PRICE.value:
-            stream_metadata.append(is_selected)
-            stream_key_properties.append('code')
+            stream_key_properties.append('id')
 
         if schema_name == Record.PRODUCT.value:
             stream_metadata.append(is_selected)
-            stream_key_properties.append('code')
+            stream_key_properties.append('sku')
+            stream_key_properties.append('tenantId')
 
-        if schema_name == Record.PRODUCT_CATEGORY.value:
+        if schema_name == Record.PRODUCT_SPEC.value:
             stream_metadata.append(is_selected)
-            stream_key_properties.append('productCode')
-            stream_key_properties.append('categoryCode')
+            stream_key_properties.append('tenantId')
+            stream_key_properties.append('sku')
+            stream_key_properties.append('specId')
 
-        if schema_name == Record.PRODUCT_FEATURE.value:
+        if schema_name == Record.SPEC.value:
             stream_metadata.append(is_selected)
-            stream_key_properties.append('productCode')
-            stream_key_properties.append('featureCode')
+            stream_key_properties.append('id')
 
-        if schema_name == Record.STOCK.value:
+        if schema_name == Record.STOCK_POINT.value:
             stream_metadata.append(is_selected)
-            stream_key_properties.append('code')
+            stream_key_properties.append('id')
 
         catalog_entry = {
             'stream': schema_name,
@@ -143,77 +135,67 @@ def sync(config, state, catalog):
 
     for product in products:
         LOGGER.info('Syncing product with code: {}'.format(product['code']))
+        timestamp = datetime.now(timezone.utc).isoformat()
 
-        price_record = build_record_handler(Record.PRICE).generate(product['price'])
-        LOGGER.debug('Writing price record: {}'.format(price_record))
-        singer.write_record(Record.PRICE.value, price_record)
+        price_point_record = \
+            build_record_handler(Record.PRICE_POINT).generate(product, timestamp=timestamp, tenant_id=TENANT_ID)
+        LOGGER.debug('Writing price_point record: {}'.format(price_point_record))
+        singer.write_record(Record.PRICE_POINT.value, price_point_record)
 
-        stock_record = build_record_handler(Record.STOCK).generate(product['stock'])
-        LOGGER.debug('Writing stock record: {}'.format(stock_record))
-        singer.write_record(Record.STOCK.value, stock_record)
+        stock_point_record = \
+            build_record_handler(Record.STOCK_POINT).generate(product, timestamp=timestamp, tenant_id=TENANT_ID)
+        LOGGER.debug('Writing stock_point record: {}'.format(stock_point_record))
+        singer.write_record(Record.STOCK_POINT.value, stock_point_record)
 
-        product_record = build_record_handler(Record.PRODUCT).generate(
-            product, price_code=price_record['code'], stock_code=stock_record['code'])
+        category_id = None
+        if 'categories' in product:
+            category = product.get('categories')[0]
+            category_record = build_record_handler(Record.CATEGORY).generate(category, tenant_id=TENANT_ID)
+
+            # category record builder returns a record if the category hasn't been handled yet
+            # otherwise, it returns the id of an already handled category record
+            if isinstance(category_record, dict):
+                category_id = category_record.get('id')
+
+                LOGGER.debug('Writing category record: {}'.format(category_record))
+                singer.write_record(Record.CATEGORY.value, category_record)
+            else:
+                category_id = category_record
+
+        product_record = \
+            build_record_handler(Record.PRODUCT).generate(product, tenant_id=TENANT_ID, category_id=category_id)
         LOGGER.debug('Writing product record: {}'.format(product_record))
         singer.write_record(Record.PRODUCT.value, product_record)
 
-        if 'categories' in product:
-            for category in product['categories']:
-                category_record = build_record_handler(Record.CATEGORY).generate(category)
-
-                if category_record:
-                    LOGGER.debug('Writing category record: {}'.format(category_record))
-                    singer.write_record(Record.CATEGORY.value, category_record)
-
-                LOGGER.debug('Writing product category record: {}'.format({
-                            'productCode': product['code'],
-                            'categoryCode': category['code']
-                        }))
-                singer.write_record(Record.PRODUCT_CATEGORY.value,
-                                    build_record_handler(Record.PRODUCT_CATEGORY).generate({
-                                        'productCode': product['code'],
-                                        'categoryCode': category['code']
-                                    }))
-
         if 'classifications' in product:
             for classification in product['classifications']:
-                classification_record = build_record_handler(Record.CLASSIFICATION).generate(classification)
 
-                if classification_record:
-                    LOGGER.debug('Writing classification record: {}'.format(classification_record))
-                    singer.write_record(Record.CLASSIFICATION.value, classification_record)
-
+                spec_id = None
                 for feature in classification['features']:
-                    feature_unit_record = build_record_handler(Record.FEATURE_UNIT).generate(feature['featureUnit'])
+                    # ignore specs without values
+                    if not feature.get('featureValues'):
+                        continue
 
-                    if feature_unit_record:
-                        LOGGER.debug('Writing feature unit record: {}'.format(feature_unit_record))
-                        singer.write_record(Record.FEATURE_UNIT.value, feature_unit_record)
+                    # ignore specs with multiple values
+                    if len(feature.get('featureValues')) > 1:
+                        continue
 
-                    feature_record = build_record_handler(Record.FEATURE).generate(
-                        feature,
-                        unit_code=feature['featureUnit']['unitType'],
-                        classification_code=classification['code'])
+                    spec_record = build_record_handler(Record.SPEC).generate(feature, tenant_id=TENANT_ID)
 
-                    if feature_record:
-                        LOGGER.debug('Writing feature record: {}'.format(feature_record))
-                        singer.write_record(Record.FEATURE.value, feature_record)
+                    if isinstance(spec_record, dict):
+                        spec_id = spec_id.get('id')
 
-                    product_feature_record = build_record_handler(Record.PRODUCT_FEATURE).generate({
-                        'productCode': product['code'],
-                        'featureCode': feature['code'],
-                    })
-                    LOGGER.debug('Writing product feature record: {}'.format(product_feature_record))
-                    singer.write_record(Record.PRODUCT_FEATURE.value, product_feature_record)
+                        LOGGER.debug('Writing spec record: {}'.format(spec_record))
+                        singer.write_record(Record.SPEC.value, spec_record)
+                    else:
+                        spec_id = spec_record
 
-                    for value in feature['featureValues']:
-                        feature_value_record = build_record_handler(Record.FEATURE_VALUE).generate({
-                            'productCode': product['code'],
-                            'featureCode': feature['code'],
-                            'featureValue': value['value']
-                        })
-                        LOGGER.debug('Writing feature value record: {}'.format(feature_value_record))
-                        singer.write_record(Record.FEATURE_VALUE.value, feature_value_record)
+                    product_spec_record = \
+                        build_record_handler(Record.PRODUCT_SPEC).generate(
+                            feature, tenant_id=TENANT_ID, sku=product.get('code'), spec_id=spec_id)
+
+                    LOGGER.debug('Writing product spec record: {}'.format(product_spec_record))
+                    singer.write_record(Record.PRODUCT_FEATURE.value, product_spec_record)
 
     return
 

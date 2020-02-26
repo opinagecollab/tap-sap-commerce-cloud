@@ -12,31 +12,127 @@ This tap:
   - prices
   - stock status
   - categories
-  - classifications
   - features
-- Outputs the schema for each resource
-- Incrementally pulls data based on the input state
 
 <br>
 
-### Tap configuration
+### Adding the tap to Meltano
 
-The tap uses the following configuration object:
- 
-```json
-{
-  "scheme": "https",
-  "base_url": "localhost:9002",
-  "base_path": "/rest/v2",
-  "base_site": "/electronics"
-}
-```
+__Important__: if you haven't installed meltano on your machine yet, follow this [tutorial](https://meltano.com/developer-tools/self-hosted-installation.html#local-installation).
+Next, to create a new meltano project, follow this [tutorial](https://meltano.com/developer-tools/command-line-interface.html#create-your-first-project). 
 
-Sample configuration is currently stored in the `./sample_config.json` file.
+<br/>
+
+Follow the steps bellow to add this tap to your meltano project:
+
+1. Download the source code to your machine.
+
+2. Make sure your Meltano virtual environment is activated
+
+3. Install the tap to your local Meltano virtual environment
+    ```bash
+    $ pip install -e /path/to/tap/source/code
+    ```
+
+4. In your meltano project folder, add the postgres target.
+   ```
+   $ meltano add loader target-postgres
+   ```
+
+5. Add the tap to your Meltano project
+    ```bash
+    $ meltano add --custom extractor tap-occ-products
+    
+       ...
+    > namespace: tap_occ_products
+    > pip_url: -e /absolute/path/to/tap/source/code
+    > executable: tap-occ-products
+    > capabilities:
+    ```
+   
+   The project `meltano.yml` file should now contain the tap configuration
+   ```yaml
+    plugins:
+       extractors:
+           ...
+          - name: tap-occ-products
+            executable: tap-occ-products
+            namespace: tap_occ_products
+            pip_url: -e tap-occ-products
+            capabilities: []
+    ```
+   The capabilities property might be missing. If it is, do not forget to add it.
+   
+6. Add the following tap required settings to the `meltano.yml` file
+    ```yaml
+    plugins:
+       extractors:
+           ...
+          - name: tap-occ-products
+            executable: tap-occ-products
+            namespace: tap_occ_products
+            pip_url: -e tap-occ-products
+            capabilities: []
+            settings_group_validation:
+            - ['scheme', 'base_url', 'base_path', 'base_site']
+            settings:
+            - label: Scheme
+              name: scheme
+              value: https
+            - label: Base Url
+              name: base_url
+              value: localhost:9002
+            - label: Base Path
+              name: base_path
+              value: /rest/v2
+            - label: Base Site
+              name: base_site
+              value: /electronics
+              description: Make sure to add a leading '/' before your base site keyword
+    ```
+
+    The tap should now be available in the project Meltano UI.
+    
+7. Add a label, description and docs for you tap and Meltano will display it in the UI.
+    ```yaml
+    plugins:
+       extractors:
+           ...
+          - name: tap-occ-products 
+            executable: tap-occ-products
+            namespace: tap_occ_products
+            pip_url: -e tap-occ-products
+            capabilities: []
+            settings_group_validation:
+            - ['scheme', 'base_url', 'base_path', 'base_site'
+            settings:
+            - label: Scheme
+              name: scheme
+              value: https
+            - label: Base Url
+              name: base_url
+              value: localhost:9002
+            - label: Base Path
+              name: base_path
+              value: /rest/v2
+            - label: Base Site
+              name: base_site
+              value: /electronics
+              description: Make sure to add a leading '/' before your base site keyword
+            label: SAP Hybris
+            description: SAP Commerce Suite product data extractor
+            docs: 'https://github.wdf.sap.corp/sentient-commerce/tap-occ-products'
+    ```
+   
+8. Optionally, you can add a logo for your tap by copying it to the Meltano source code:
+   ```bash
+   $ cp ./logo/occ-products-logo.png /path/to/your/meltano/virtual/env/lib/python3.7/site-packages/meltano/api/static/logos
+   ```
 
 <br>
 
-### Running the tap
+
+### Running the tap locally
 
 1. Create a virtual environment to avoid dependecy related issues
     ```text
@@ -59,90 +155,6 @@ Sample configuration is currently stored in the `./sample_config.json` file.
     ```
    
 5. For more information read [this](https://github.com/singer-io/getting-started). 
-
-<br>
-
-### Adding the tap to Meltano
-
-1. Make sure your Meltano virtual environment is activated
-
-2. Install the tap to your local Meltano virtual environment
-    ```bash
-    $ pip install -e /path/to/tap/source/code
-    ```
-
-3. Add the tap to your Meltano project
-    ```bash
-    $ meltano add --custom extractor tap-occ-products
-    
-       ...
-    > namespace: tap_occ_products
-    > pip_url: -e /absolute/path/to/tap/source/code
-    > executable: tap-occ-products
-    > capabilities: 
-    ```
-   
-   The project `meltano.yml` file should now contain the tap configuration
-   ```yaml
-    plugins:
-       extractors:
-           ...
-          - capabilities: []
-            executable: tap-occ-products
-            name: tap-occ-products
-            namespace: tap_occ_products
-            pip_url: -e tap-occ-products
-    ```
-   
-4. Add the following tap required settings to the `meltano.yml` file
-    ```yaml
-    plugins:
-       extractors:
-           ...
-          - capabilities: []
-            executable: tap-occ-products
-            name: tap-occ-products
-            namespace: tap_occ_products
-            pip_url: -e tap-occ-products
-            settings:
-            - name: scheme
-              value: https
-            - name: base_url
-              value: localhost:9002
-            - name: base_path
-              value: /rest/v2
-            - name: base_site
-              value: /electronics
-    ```
-
-    The tap should now be available in the project Meltano UI.
-    
-5. Optionally, you can add a description for you tap and Meltano will display it in the UI.
-    ```yaml
-    plugins:
-       extractors:
-           ...
-          - capabilities: []
-            executable: tap-occ-products
-            name: tap-occ-products
-            namespace: tap_occ_products
-            pip_url: -e tap-occ-products
-            settings:
-            - name: scheme
-              value: https
-            - name: base_url
-              value: localhost:9002
-            - name: base_path
-              value: /rest/v2
-            - name: base_site
-              value: /electronics
-            description: SAP Commerce Suite product data extractor
-    ```
-   
-6. Optionally, you can add a logo for your tap by copying it to the Meltano source code:
-   ```bash
-   $ cp ./logo/occ-products-logo.png /path/to/your/meltano/virtual/env/lib/python3.7/site-packages/meltano/api/static/logos
-   ```
 
 <br>
 

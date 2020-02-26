@@ -4,14 +4,12 @@ from tap_occ_products.record.factory import build_record_handler
 from tap_occ_products.record.record import Record
 
 from tap_occ_products.record.handler.category_handler import CategoryHandler
-from tap_occ_products.record.handler.classification_handler import ClassificationHandler
-from tap_occ_products.record.handler.feature_handler import FeatureHandler
-from tap_occ_products.record.handler.feature_unit_handler import FeatureUnitHandler
-from tap_occ_products.record.handler.feature_value_handler import FeatureValueHandler
-from tap_occ_products.record.handler.price_handler import PriceHandler
+from tap_occ_products.record.handler.customer_specific_price_handler import CustomerSpecificPriceHandler
+from tap_occ_products.record.handler.price_point_handler import PricePointHandler
 from tap_occ_products.record.handler.product_handler import ProductHandler
-from tap_occ_products.record.handler.product_category_handler import ProductCategoryHandler
-from tap_occ_products.record.handler.product_feature_handler import ProductFeatureHandler
+from tap_occ_products.record.handler.product_spec_handler import ProductSpecHandler
+from tap_occ_products.record.handler.spec_handler import SpecHandler
+from tap_occ_products.record.handler.stock_point_handler import StockPointHandler
 
 
 class TestFactory(unittest.TestCase):
@@ -20,34 +18,26 @@ class TestFactory(unittest.TestCase):
         category_handler = build_record_handler(Record.CATEGORY)
         self.assertTrue(isinstance(category_handler, CategoryHandler))
 
-    def test_should_build_classification_handler(self):
-        classification_handler = build_record_handler(Record.CLASSIFICATION)
-        self.assertTrue(isinstance(classification_handler, ClassificationHandler))
+    def test_should_build_customer_specific_price_handler(self):
+        customer_specific_price_handler = build_record_handler(Record.CUSTOMER_SPECIFIC_PRICE)
+        self.assertTrue(isinstance(customer_specific_price_handler, CustomerSpecificPriceHandler))
 
-    def test_should_build_feature_handler(self):
-        feature_handler = build_record_handler(Record.FEATURE)
-        self.assertTrue(isinstance(feature_handler, FeatureHandler))
-
-    def test_should_build_feature_unit_handler(self):
-        feature_unit_handler = build_record_handler(Record.FEATURE_UNIT)
-        self.assertTrue(isinstance(feature_unit_handler, FeatureUnitHandler))
-
-    def test_should_build_feature_value_handler(self):
-        feature_value_handler = build_record_handler(Record.FEATURE_VALUE)
-        self.assertTrue(isinstance(feature_value_handler, FeatureValueHandler))
-
-    def test_should_build_price_handler(self):
-        price_handler = build_record_handler(Record.PRICE)
-        self.assertTrue(isinstance(price_handler, PriceHandler))
+    def test_should_build_price_point_handler(self):
+        price_point_handler = build_record_handler(Record.PRICE_POINT)
+        self.assertTrue(isinstance(price_point_handler, PricePointHandler))
 
     def test_should_build_product_handler(self):
         product_handler = build_record_handler(Record.PRODUCT)
         self.assertTrue(isinstance(product_handler, ProductHandler))
 
-    def test_should_build_product_category_handler(self):
-        product_category_handler = build_record_handler(Record.PRODUCT_CATEGORY)
-        self.assertTrue(isinstance(product_category_handler, ProductCategoryHandler))
+    def test_should_build_product_spec_handler(self):
+        product_spec_handler = build_record_handler(Record.PRODUCT_SPEC)
+        self.assertTrue(isinstance(product_spec_handler, ProductSpecHandler))
 
-    def test_should_build_product_feature_handler(self):
-        product_feature_handler = build_record_handler(Record.PRODUCT_FEATURE)
-        self.assertTrue(isinstance(product_feature_handler, ProductFeatureHandler))
+    def test_should_build_spec_handler(self):
+        spec_handler = build_record_handler(Record.SPEC)
+        self.assertTrue(isinstance(spec_handler, SpecHandler))
+
+    def test_should_stock_point_handler(self):
+        stock_point_handler = build_record_handler(Record.STOCK_POINT)
+        self.assertTrue(isinstance(stock_point_handler, StockPointHandler))

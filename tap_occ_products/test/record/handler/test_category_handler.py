@@ -7,40 +7,38 @@ from tap_occ_products.record.record import Record
 class TestCategoryHandler(unittest.TestCase):
     def test_should_generate_category_record(self):
         categories = [
-            build_record_handler(Record.CATEGORY).generate(
-                {
-                    'code': '1234',
+            build_record_handler(Record.CATEGORY).generate({
+                    'code': 'c123',
                     'name': 'laptops',
-                    'url': '/laptops'
-                }
+                },
+                tenant_id='t1'
             ),
             build_record_handler(Record.CATEGORY).generate(
                 {
-                    'code': '2345',
+                    'code': 'c234',
                     'name': 'e-readers',
-                    'url': '/e-readers'
-                }
+                },
+                tenant_id='t1'
             )
         ]
 
         self.assertEqual(categories, [
             {
-                'code': '1234',
+                'id': 't11',
                 'name': 'laptops',
-                'url': '/laptops'
             },
             {
-                'code': '2345',
+                'id': 't12',
                 'name': 'e-readers',
-                'url': '/e-readers'
             }
         ])
 
     def test_should_ignore_handled_category_record(self):
-        self.assertIsNone(build_record_handler(Record.CATEGORY).generate(
+        self.assertEqual(build_record_handler(Record.CATEGORY).generate(
             {
-                'code': '1234',
-                'name': 'laptops',
-                'url': '/laptops'
-            }))
+                'code': 'c123',
+                'name': 'laptops'
+            },
+            tenant_id='t1'
+        ), 't11')
 

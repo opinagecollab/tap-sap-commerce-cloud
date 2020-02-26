@@ -11,60 +11,74 @@ class TestProductHandler(unittest.TestCase):
             build_record_handler(Record.PRODUCT).generate(
                 {
                     'code': '123456',
-                    'availableForPickup': True,
-                    'averageRating': 4.56,
-                    'description': 'Product description',
-                    'manufacturer': 'Sony',
+                    'price': {
+                        'currencyIso': 'USD',
+                        'value': 1.23
+                    },
+                    'stock': {
+                        'stockLevel': 10.0
+                    },
                     'name': 'Sony Product',
-                    'numberOfReviews': 12,
+                    'description': 'Product description',
                     'summary': 'Product summary',
-                    'url': 'http://product.url'
+                    'manufacturer': 'Sony',
+                    'averageRating': 3.7,
+                    'numberOfReviews': 123
                 },
-                price_code='1',
-                stock_code='1'
+                tenant_id='t1',
+                category_id='t11'
             ),
             build_record_handler(Record.PRODUCT).generate(
                 {
                     'code': '234567',
-                    'availableForPickup': False,
-                    'averageRating': 1.23,
-                    'description': 'Product description',
-                    'manufacturer': 'Apple',
+                    'price': {
+                        'currencyIso': 'USD',
+                        'value': 3.70
+                    },
+                    'stock': {
+                        'stockStatus': 'inStock'
+                    },
                     'name': 'Apple Product',
-                    'numberOfReviews': 32,
+                    'description': 'Product description',
                     'summary': 'Product summary',
-                    'url': 'http://product.url'
+                    'manufacturer': 'Apple',
+                    'averageRating': 4.9,
+                    'numberOfReviews': 1283
                 },
-                price_code='2',
-                stock_code='2'
+                tenant_id='t1',
+                category_id='t12'
             )
         ]
 
         self.assertEqual(products, [
             {
-                'code': '123456',
-                'availableForPickup': True,
-                'averageRating': 4.56,
-                'description': 'Product description',
-                'manufacturer': 'Sony',
+                'sku': '123456',
+                'tenantId': 't1',
+                'categoryId': 't11',
+                'regularPrice': 1.23,
+                'currency': 'USD',
+                'salePrice': None,
+                'stock': 10.0,
                 'name': 'Sony Product',
-                'numberOfReviews': 12,
+                'description': 'Product description',
                 'summary': 'Product summary',
-                'url': 'http://product.url',
-                'priceCode': '1',
-                'stockCode': '1'
+                'manufacturer': 'Sony',
+                'reviewAverage': 3.7,
+                'reviewCount': 123
             },
             {
-                'code': '234567',
-                'availableForPickup': False,
-                'averageRating': 1.23,
-                'description': 'Product description',
-                'manufacturer': 'Apple',
+                'sku': '234567',
+                'tenantId': 't1',
+                'categoryId': 't12',
+                'regularPrice': 3.70,
+                'salePrice': None,
+                'currency': 'USD',
+                'stock': None,
                 'name': 'Apple Product',
-                'numberOfReviews': 32,
+                'description': 'Product description',
                 'summary': 'Product summary',
-                'url': 'http://product.url',
-                'priceCode': '2',
-                'stockCode': '2'
+                'manufacturer': 'Apple',
+                'reviewAverage': 4.9,
+                'reviewCount': 1283
             }
         ])
