@@ -1,11 +1,17 @@
 {
   "type": "object",
   "properties": {
-    "productCode": {
+    "customerId": {
       "type": "string"
     },
-    "categoryCode": {
+    "tenantId": {
       "type": "string"
+    },
+    "sku": {
+      "type": "string"
+    },
+    "price": {
+      "type": "number"
     }
   },
   "additionalProperties": false

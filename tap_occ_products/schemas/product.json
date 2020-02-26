@@ -1,38 +1,44 @@
 {
   "type": "object",
   "properties": {
-    "availableForPickup": {
-      "type": ["null", "boolean"]
-    },
-    "averageRating": {
-      "type": ["null", "number"]
-    },
-    "code": {
+    "sku": {
       "type": "string"
     },
+    "tenantId": {
+      "type": "string"
+    },
+    "categoryId": {
+      "type": "string"
+    },
+    "regularPrice": {
+      "type": "number"
+    },
+    "salePrice": {
+      "type": ["null", "number"]
+    },
+    "currency": {
+      "type": "string"
+    },
+    "stock": {
+      "type": "number"
+    },
+    "name": {
+      "type": ["null", "string"]
+    },
     "description": {
+      "type": ["null", "string"]
+    },
+    "summary": {
       "type": ["null", "string"]
     },
     "manufacturer": {
       "type": ["null", "string"]
     },
-    "name": {
-      "type": ["null", "string"]
-    },
-    "numberOfReviews": {
+    "reviewAverage": {
       "type": ["null", "number"]
     },
-    "priceCode": {
-      "type": "string"
-    },
-    "stockCode": {
-      "type": "string"
-    },
-    "summary": {
-      "type": ["null", "string"]
-    },
-    "url": {
-      "type": ["null", "string"]
+    "reviewCount": {
+      "type": ["null", "number"]
     }
   },
   "additionalProperties": false

@@ -1,14 +1,20 @@
 {
   "type": "object",
   "properties": {
-    "name": {
-      "type": ["null", "string"]
-    },
-    "symbol": {
-      "type": ["null", "string"]
-    },
-    "unitType": {
+    "id": {
       "type": "string"
+    },
+    "name": {
+      "type":  ["null", "string"]
+    },
+    "unitName": {
+      "type": ["null", "string"]
+    },
+    "unitSymbols": {
+      "type": ["null", "string"]
+    },
+    "comparable": {
+      "type": ["null", "boolean"]
     }
   },
   "additionalProperties": false

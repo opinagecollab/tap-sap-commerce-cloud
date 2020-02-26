@@ -1,0 +1,30 @@
+{
+  "type": "object",
+  "properties": {
+    "tenantId": {
+      "type": "string"
+    },
+    "sku": {
+      "type": "string"
+    },
+    "specId": {
+      "type": "string"
+    },
+    "value": {
+      "type": "string"
+    },
+    "pureValue": {
+      "type": "string"
+    },
+    "type": {
+      "type": "string"
+    },
+    "interpretedType": {
+      "type": "string"
+    },
+    "interpretedValue": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": false
+}
