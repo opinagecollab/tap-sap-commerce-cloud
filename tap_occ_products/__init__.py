@@ -63,7 +63,11 @@ def discover():
             stream_key_properties.append('sku')
 
         if schema_name == Record.PRICE_POINT.value:
-            stream_metadata.append(is_selected)
+            updated_metadata = is_selected
+            updated_metadata['metadata']['valid-replication-keys'] = 'id'
+            updated_metadata['metadata']['replication-method'] = 'INCREMENTAL'
+
+            stream_metadata.append(updated_metadata)
             stream_key_properties.append('id')
 
         if schema_name == Record.PRODUCT.value:
@@ -82,7 +86,11 @@ def discover():
             stream_key_properties.append('id')
 
         if schema_name == Record.STOCK_POINT.value:
-            stream_metadata.append(is_selected)
+            updated_metadata = is_selected
+            updated_metadata['metadata']['valid-replication-keys'] = 'id'
+            updated_metadata['metadata']['replication-method'] = 'INCREMENTAL'
+
+            stream_metadata.append(updated_metadata)
             stream_key_properties.append('id')
 
         catalog_entry = {
@@ -118,6 +126,7 @@ def get_selected_streams(catalog):
 def sync(config, state, catalog):
     LOGGER.info('Syncing selected streams')
     selected_stream_ids = get_selected_streams(catalog)
+    timestamp = datetime.now(timezone.utc).isoformat()
 
     for stream in catalog['streams']:
         stream_id = stream['tap_stream_id']
@@ -135,7 +144,6 @@ def sync(config, state, catalog):
 
     for product in products:
         LOGGER.info('Syncing product with code: {}'.format(product['code']))
-        timestamp = datetime.now(timezone.utc).isoformat()
 
         price_point_record = \
             build_record_handler(Record.PRICE_POINT).generate(product, timestamp=timestamp, tenant_id=TENANT_ID)
@@ -183,7 +191,7 @@ def sync(config, state, catalog):
                     spec_record = build_record_handler(Record.SPEC).generate(feature, tenant_id=TENANT_ID)
 
                     if isinstance(spec_record, dict):
-                        spec_id = spec_id.get('id')
+                        spec_id = spec_record.get('id')
 
                         LOGGER.debug('Writing spec record: {}'.format(spec_record))
                         singer.write_record(Record.SPEC.value, spec_record)
@@ -195,7 +203,7 @@ def sync(config, state, catalog):
                             feature, tenant_id=TENANT_ID, sku=product.get('code'), spec_id=spec_id)
 
                     LOGGER.debug('Writing product spec record: {}'.format(product_spec_record))
-                    singer.write_record(Record.PRODUCT_FEATURE.value, product_spec_record)
+                    singer.write_record(Record.PRODUCT_SPEC.value, product_spec_record)
 
     return
 

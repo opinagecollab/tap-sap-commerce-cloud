@@ -10,7 +10,7 @@ class ProductHandler(BaseHandler):
             'sku': product.get('code'),
             'tenantId': options.get('tenant_id'),
             'categoryId': options.get('category_id'),
-            'regularPrice': str(product.get('price', {}).get('value')),
+            'regularPrice': product.get('price', {}).get('value'),
             'salePrice': None,
             'currency': product.get('price', {}).get('currencyIso'),
             'stock': product.get('stock', {}).get('stockLevel'),

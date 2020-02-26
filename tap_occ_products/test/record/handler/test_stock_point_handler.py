@@ -32,12 +32,14 @@ class TestStockPointHandler(unittest.TestCase):
 
         self.assertEqual(stock_points, [
             {
+                'id': "{}.{}".format(timestamp, 1),
                 'tenantId': 't1',
                 'sku': 'abc123',
                 'stock': 10,
                 'timestamp': timestamp
             },
             {
+                'id': "{}.{}".format(timestamp, 2),
                 'tenantId': 't1',
                 'sku': 'abc234',
                 'stock': 20,

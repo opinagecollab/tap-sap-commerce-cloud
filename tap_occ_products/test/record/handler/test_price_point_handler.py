@@ -32,12 +32,14 @@ class TestPricePointHandler(unittest.TestCase):
 
         self.assertEqual(price_points, [
             {
+                'id': "{}.{}".format(timestamp, 1),
                 'tenantId': 't1',
                 'sku': 'abc123',
                 'price': 50.0,
                 'timestamp': timestamp
             },
             {
+                'id': "{}.{}".format(timestamp, 2),
                 'tenantId': 't1',
                 'sku': 'abc234',
                 'price': 54.0,
