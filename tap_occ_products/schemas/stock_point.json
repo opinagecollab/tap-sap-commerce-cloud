@@ -15,7 +15,7 @@
       "format": "date-time"
     },
     "stock": {
-      "type": "number"
+      "type": ["null", "number"]
     }
   },
   "additionalProperties": false

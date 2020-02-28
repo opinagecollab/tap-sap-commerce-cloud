@@ -5,12 +5,12 @@
       "type": "string"
     },
     "name": {
-      "type":  ["null", "string"]
+      "type": ["null", "string"]
     },
     "unitName": {
       "type": ["null", "string"]
     },
-    "unitSymbols": {
+    "unitSymbol": {
       "type": ["null", "string"]
     },
     "comparable": {

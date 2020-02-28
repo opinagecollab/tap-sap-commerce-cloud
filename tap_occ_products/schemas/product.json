@@ -20,7 +20,7 @@
       "type": "string"
     },
     "stock": {
-      "type": "number"
+      "type": ["null", "number"]
     },
     "name": {
       "type": ["null", "string"]
