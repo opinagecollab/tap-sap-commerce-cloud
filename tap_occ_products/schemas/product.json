@@ -22,6 +22,12 @@
     "stock": {
       "type": ["null", "number"]
     },
+    "imageUri": {
+      "type": ["null", "string"]
+    },
+    "detailsUri": {
+      "type": ["null", "string"]
+    },
     "name": {
       "type": ["null", "string"]
     },

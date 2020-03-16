@@ -10,7 +10,16 @@ from tap_occ_products.record.record import Record
 from tap_occ_products.record.factory import build_record_handler
 
 
-REQUIRED_CONFIG_KEYS = ['scheme', 'base_url', 'base_path', 'base_site']
+REQUIRED_CONFIG_KEYS = [
+    'api_scheme',
+    'api_base_url',
+    'api_base_path',
+    'api_base_site',
+    'ui_scheme',
+    'ui_base_url',
+    'ui_product_path',
+    'ui_base_site'
+]
 
 LOGGER = singer.get_logger()
 LOGGER.setLevel(level='DEBUG')
@@ -219,7 +228,8 @@ def sync(config, state, catalog):
                 category_id = category_record
 
         product_record = \
-            build_record_handler(Record.PRODUCT).generate(product, tenant_id=TENANT_ID, category_id=category_id)
+            build_record_handler(Record.PRODUCT).generate(
+                product, tenant_id=TENANT_ID, category_id=category_id, config=config)
         LOGGER.debug('Writing product record: {}'.format(product_record))
         singer.write_record(Record.PRODUCT.value, product_record)
 

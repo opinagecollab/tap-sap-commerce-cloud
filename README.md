@@ -74,21 +74,34 @@ Follow the steps bellow to add this tap to your meltano project:
             pip_url: -e tap-occ-products
             capabilities: []
             settings_group_validation:
-            - ['scheme', 'base_url', 'base_path', 'base_site']
+            - ['api_scheme', 'api_base_url', 'api_base_path', 'api_base_site', 'ui_scheme', 'ui_base_url', 'ui_base_site', 'ui_product_path']
             settings:
-            - label: Scheme
-              name: scheme
+            - label: API Scheme
+              name: api_scheme
               value: https
-            - label: Base Url
-              name: base_url
+            - label: API Base Url
+              name: api_base_url
               value: localhost:9002
-            - label: Base Path
-              name: base_path
+            - label: API Base Path
+              name: api_base_path
               value: /rest/v2
-            - label: Base Site
-              name: base_site
+            - label: API Base Site
+              name: api_base_site
               value: /electronics
               description: Make sure to add a leading '/' before your base site keyword
+            - label: UI Scheme
+              name: ui_scheme
+              value: http
+            - label: UI Base Url
+              name: ui_base_url
+              value: localhost:4200
+            - label: UI Base Site
+              name: ui_base_site
+              value: /electronics-spa
+              description: Make sure to add a leading '/' before your base site keyword
+            - label: UI Product Path
+              name: ui_product_path
+              value: /rest/v2
     ```
 
     The tap should now be available in the project Meltano UI.
@@ -104,21 +117,35 @@ Follow the steps bellow to add this tap to your meltano project:
             pip_url: -e tap-occ-products
             capabilities: []
             settings_group_validation:
-            - ['scheme', 'base_url', 'base_path', 'base_site'
+            settings_group_validation:
+            - ['api_scheme', 'api_base_url', 'api_base_path', 'api_base_site', 'ui_scheme', 'ui_base_url', 'ui_base_site', 'ui_product_path']
             settings:
-            - label: Scheme
-              name: scheme
+            - label: API Scheme
+              name: api_scheme
               value: https
-            - label: Base Url
-              name: base_url
+            - label: API Base Url
+              name: api_base_url
               value: localhost:9002
-            - label: Base Path
-              name: base_path
+            - label: API Base Path
+              name: api_base_path
               value: /rest/v2
-            - label: Base Site
-              name: base_site
+            - label: API Base Site
+              name: api_base_site
               value: /electronics
               description: Make sure to add a leading '/' before your base site keyword
+            - label: UI Scheme
+              name: ui_scheme
+              value: http
+            - label: UI Base Url
+              name: ui_base_url
+              value: localhost:4200
+            - label: UI Base Site
+              name: ui_base_site
+              value: /electronics-spa
+              description: Make sure to add a leading '/' before your base site keyword
+            - label: UI Product Path
+              name: ui_product_path
+              value: /product
             label: SAP Hybris
             description: SAP Commerce Suite product data extractor
             docs: 'https://github.wdf.sap.corp/sentient-commerce/tap-occ-products'

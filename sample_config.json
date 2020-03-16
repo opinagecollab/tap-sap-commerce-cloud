@@ -1,6 +1,10 @@
 {
-  "scheme": "https",
-  "base_url": "localhost:9002",
-  "base_path": "/rest/v2",
-  "base_site": "/electronics"
+  "api_scheme": "https",
+  "api_base_url": "localhost:9002",
+  "api_base_path": "/rest/v2",
+  "api_base_site": "/electronics",
+  "ui_scheme": "http",
+  "ui_base_url": "localhost:4200",
+  "ui_base_site": "/electronics-spa",
+  "ui_product_path": "/product"
 }

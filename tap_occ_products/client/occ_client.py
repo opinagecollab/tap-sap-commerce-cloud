@@ -12,10 +12,10 @@ class OccClient:
     PRODUCT_PATH = '/products/{}?fields=FULL'
 
     def __init__(self, config):
-        self.scheme = config['scheme']
-        self.base_url = config['base_url']
-        self.base_path = config['base_path']
-        self.base_site = config['base_site']
+        self.scheme = config['api_scheme']
+        self.base_url = config['api_base_url']
+        self.base_path = config['api_base_path']
+        self.base_site = config['api_base_site']
 
         self.search_url = urlunparse((
             self.scheme, self.base_url, self.base_path + self.base_site + self.PRODUCT_SEARCH_PATH, None, None, None

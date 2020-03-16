@@ -10,10 +10,10 @@ from tap_occ_products.test.resources import product_details, product_search_list
 class TestOccClient(unittest.TestCase):
     def setUp(self):
         self.client = OccClient({
-            'scheme': 'https',
-            'base_url': 'test:9002',
-            'base_path': '/rest/v2',
-            'base_site': '/electronics'
+            'api_scheme': 'https',
+            'api_base_url': 'test:9002',
+            'api_base_path': '/rest/v2',
+            'api_base_site': '/electronics'
         })
 
         warnings.filterwarnings("ignore", category=ResourceWarning, message="unclosed.*")
