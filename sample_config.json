@@ -1,4 +1,5 @@
 {
+  "tenant_id": "t1",
   "api_scheme": "https",
   "api_base_url": "localhost:9002",
   "api_base_path": "/rest/v2",

@@ -11,6 +11,7 @@ from tap_occ_products.record.factory import build_record_handler
 
 
 REQUIRED_CONFIG_KEYS = [
+    'tenant_id',
     'api_scheme',
     'api_base_url',
     'api_base_path',
@@ -23,8 +24,6 @@ REQUIRED_CONFIG_KEYS = [
 
 LOGGER = singer.get_logger()
 LOGGER.setLevel(level='DEBUG')
-
-TENANT_ID = 't1'
 
 
 def get_abs_path(path):
@@ -128,6 +127,7 @@ def sync(config, state, catalog):
     LOGGER.info('Syncing selected streams')
     selected_stream_ids = get_selected_streams(catalog)
     timestamp = datetime.now(timezone.utc).isoformat()
+    tenant_id = config.get('tenant_id')
 
     if Record.CATEGORY.value in selected_stream_ids:
         category_stream = \
@@ -215,7 +215,7 @@ def sync(config, state, catalog):
         category_id = None
         if 'categories' in product:
             category = product.get('categories')[0]
-            category_record = build_record_handler(Record.CATEGORY).generate(category, tenant_id=TENANT_ID)
+            category_record = build_record_handler(Record.CATEGORY).generate(category, tenant_id=tenant_id)
 
             # category record builder returns a record if the category hasn't been handled yet
             # otherwise, it returns the id of an already handled category record
@@ -229,7 +229,7 @@ def sync(config, state, catalog):
 
         product_record = \
             build_record_handler(Record.PRODUCT).generate(
-                product, tenant_id=TENANT_ID, category_id=category_id, config=config)
+                product, tenant_id=tenant_id, category_id=category_id, config=config)
         LOGGER.debug('Writing product record: {}'.format(product_record))
         singer.write_record(Record.PRODUCT.value, product_record)
 
@@ -242,7 +242,7 @@ def sync(config, state, catalog):
                     if len(feature.get('featureValues')) > 1:
                         continue
 
-                    spec_record = build_record_handler(Record.SPEC).generate(feature, tenant_id=TENANT_ID)
+                    spec_record = build_record_handler(Record.SPEC).generate(feature, tenant_id=tenant_id)
 
                     if isinstance(spec_record, dict):
                         spec_id = spec_record.get('id')
@@ -254,18 +254,18 @@ def sync(config, state, catalog):
 
                     product_spec_record = \
                         build_record_handler(Record.PRODUCT_SPEC).generate(
-                            feature, tenant_id=TENANT_ID, sku=product.get('code'), spec_id=spec_id)
+                            feature, tenant_id=tenant_id, sku=product.get('code'), spec_id=spec_id)
 
                     LOGGER.debug('Writing product spec record: {}'.format(product_spec_record))
                     singer.write_record(Record.PRODUCT_SPEC.value, product_spec_record)
 
         price_point_record = \
-            build_record_handler(Record.PRICE_POINT).generate(product, timestamp=timestamp, tenant_id=TENANT_ID)
+            build_record_handler(Record.PRICE_POINT).generate(product, timestamp=timestamp, tenant_id=tenant_id)
         LOGGER.debug('Writing price_point record: {}'.format(price_point_record))
         singer.write_record(Record.PRICE_POINT.value, price_point_record)
 
         stock_point_record = \
-            build_record_handler(Record.STOCK_POINT).generate(product, timestamp=timestamp, tenant_id=TENANT_ID)
+            build_record_handler(Record.STOCK_POINT).generate(product, timestamp=timestamp, tenant_id=tenant_id)
         LOGGER.debug('Writing stock_point record: {}'.format(stock_point_record))
         singer.write_record(Record.STOCK_POINT.value, stock_point_record)
     return

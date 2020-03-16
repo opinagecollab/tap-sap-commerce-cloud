@@ -74,8 +74,11 @@ Follow the steps bellow to add this tap to your meltano project:
             pip_url: -e tap-occ-products
             capabilities: []
             settings_group_validation:
-            - ['api_scheme', 'api_base_url', 'api_base_path', 'api_base_site', 'ui_scheme', 'ui_base_url', 'ui_base_site', 'ui_product_path']
+            - ['tenant_id', 'api_scheme', 'api_base_url', 'api_base_path', 'api_base_site', 'ui_scheme', 'ui_base_url', 'ui_base_site', 'ui_product_path']
             settings:
+            - label: Tenant ID
+              name: tenant_id
+              value: t1
             - label: API Scheme
               name: api_scheme
               value: https
@@ -118,8 +121,11 @@ Follow the steps bellow to add this tap to your meltano project:
             capabilities: []
             settings_group_validation:
             settings_group_validation:
-            - ['api_scheme', 'api_base_url', 'api_base_path', 'api_base_site', 'ui_scheme', 'ui_base_url', 'ui_base_site', 'ui_product_path']
+            - ['tenant_id', 'api_scheme', 'api_base_url', 'api_base_path', 'api_base_site', 'ui_scheme', 'ui_base_url', 'ui_base_site', 'ui_product_path']
             settings:
+            - label: Tenant ID
+              name: tenant_id
+              value: t1
             - label: API Scheme
               name: api_scheme
               value: https
