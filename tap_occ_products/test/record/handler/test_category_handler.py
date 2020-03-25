@@ -8,14 +8,14 @@ class TestCategoryHandler(unittest.TestCase):
     def test_should_generate_category_record(self):
         categories = [
             build_record_handler(Record.CATEGORY).generate({
-                    'code': 'c123',
+                    'code': 'abc, c123',
                     'name': 'laptops',
                 },
                 tenant_id='t1'
             ),
             build_record_handler(Record.CATEGORY).generate(
                 {
-                    'code': 'c234',
+                    'code': 'bcd, c234',
                     'name': 'e-readers',
                 },
                 tenant_id='t1'
@@ -36,7 +36,7 @@ class TestCategoryHandler(unittest.TestCase):
     def test_should_ignore_handled_category_record(self):
         self.assertEqual(build_record_handler(Record.CATEGORY).generate(
             {
-                'code': 'c123',
+                'code': 'xyz, c123',
                 'name': 'laptops'
             },
             tenant_id='t1'

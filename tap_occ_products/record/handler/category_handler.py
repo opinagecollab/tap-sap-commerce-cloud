@@ -8,13 +8,18 @@ class CategoryHandler(BaseHandler):
     _code = 0
 
     def generate(self, category, **options):
-        if category.get('code') in self._handled_categories:
-            return self._handled_categories.get(category.get('code'))
+        if ',' in category.get('code'):
+            code = category.get('code').split(',')[1].strip()
+        else:
+            code = category.get('code')
+
+        if code in self._handled_categories:
+            return self._handled_categories.get(code)
 
         self._code += 1
         category_id = options.get('tenant_id') + str(self._code)
 
-        self._handled_categories[category.get('code')] = category_id
+        self._handled_categories[code] = category_id
 
         return {
             'id': category_id,
