@@ -236,7 +236,6 @@ def sync(config, state, catalog):
         if 'classifications' in product:
             for classification in product['classifications']:
 
-                spec_id = None
                 for feature in classification['features']:
                     # ignore specs with multiple values
                     if len(feature.get('featureValues')) > 1:
