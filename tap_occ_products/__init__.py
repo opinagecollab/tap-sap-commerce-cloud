@@ -212,20 +212,26 @@ def sync(config, state, catalog):
     for product in products:
         LOGGER.info('Syncing product with code: {}'.format(product['code']))
 
-        category_id = None
-        if 'categories' in product:
-            category = product.get('categories')[0]
-            category_record = build_record_handler(Record.CATEGORY).generate(category, tenant_id=tenant_id)
+        if 'categories' not in product:
+            LOGGER.info('Product has no category! Skipping ...')
+            continue
 
-            # category record builder returns a record if the category hasn't been handled yet
-            # otherwise, it returns the id of an already handled category record
-            if isinstance(category_record, dict):
-                category_id = category_record.get('id')
+        if len(product.get('categories', [])) == 0:
+            LOGGER.info('Product has no category! Skipping ...')
+            continue
 
-                LOGGER.debug('Writing category record: {}'.format(category_record))
-                singer.write_record(Record.CATEGORY.value, category_record)
-            else:
-                category_id = category_record
+        category = product.get('categories')[0]
+        category_record = build_record_handler(Record.CATEGORY).generate(category, tenant_id=tenant_id)
+
+        # category record builder returns a record if the category hasn't been handled yet
+        # otherwise, it returns the id of an already handled category record
+        if isinstance(category_record, dict):
+            category_id = category_record.get('id')
+
+            LOGGER.debug('Writing category record: {}'.format(category_record))
+            singer.write_record(Record.CATEGORY.value, category_record)
+        else:
+            category_id = category_record
 
         product_record = \
             build_record_handler(Record.PRODUCT).generate(
