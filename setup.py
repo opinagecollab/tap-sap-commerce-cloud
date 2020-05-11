@@ -10,8 +10,8 @@ setup(
     classifiers=["Programming Language :: Python :: 3 :: Only"],
     py_modules=["tap_sap_commerce_cloud"],
     install_requires=[
-        "singer-python>=5.0.12",
-        "requests",
+        "singer-python==5.6.1",
+        "requests==2.20.0",
     ],
     entry_points="""
     [console_scripts]
