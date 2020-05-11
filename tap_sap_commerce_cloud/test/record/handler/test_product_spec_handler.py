@@ -1,7 +1,7 @@
 import unittest
 
-from tap_occ_products.record.factory import build_record_handler
-from tap_occ_products.record.record import Record
+from tap_sap_commerce_cloud.record.factory import build_record_handler
+from tap_sap_commerce_cloud.record.record import Record
 
 
 class TestProductSpecHandler(unittest.TestCase):

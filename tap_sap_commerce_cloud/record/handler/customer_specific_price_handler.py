@@ -1,5 +1,5 @@
-from tap_occ_products.record.handler.base import BaseHandler
-from tap_occ_products.record.handler.decorators import Singleton
+from tap_sap_commerce_cloud.record.handler.base import BaseHandler
+from tap_sap_commerce_cloud.record.handler.decorators import Singleton
 
 
 @Singleton

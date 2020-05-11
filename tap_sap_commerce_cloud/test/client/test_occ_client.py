@@ -3,8 +3,8 @@ import httpretty
 import json
 import warnings
 
-from tap_occ_products.client.occ_client import OccClient
-from tap_occ_products.test.resources import product_details, product_search_list
+from tap_sap_commerce_cloud.client.occ_client import OccClient
+from tap_sap_commerce_cloud.test.resources import product_details, product_search_list
 
 
 class TestOccClient(unittest.TestCase):

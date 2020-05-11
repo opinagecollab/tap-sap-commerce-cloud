@@ -5,9 +5,9 @@ import singer
 
 from datetime import datetime, timezone
 from singer import utils, metadata
-from tap_occ_products.client.occ_client import OccClient
-from tap_occ_products.record.record import Record
-from tap_occ_products.record.factory import build_record_handler
+from tap_sap_commerce_cloud.client.occ_client import OccClient
+from tap_sap_commerce_cloud.record.record import Record
+from tap_sap_commerce_cloud.record.factory import build_record_handler
 
 
 REQUIRED_CONFIG_KEYS = [

@@ -1,2 +1,2 @@
 include LICENSE
-include tap_occ_products/schemas/*.json
+include tap_sap_commerce_cloud/schemas/*.json

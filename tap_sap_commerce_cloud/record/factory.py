@@ -1,11 +1,11 @@
-from tap_occ_products.record.record import Record
-from tap_occ_products.record.handler.category_handler import CategoryHandler
-from tap_occ_products.record.handler.customer_specific_price_handler import CustomerSpecificPriceHandler
-from tap_occ_products.record.handler.price_point_handler import PricePointHandler
-from tap_occ_products.record.handler.product_handler import ProductHandler
-from tap_occ_products.record.handler.product_spec_handler import ProductSpecHandler
-from tap_occ_products.record.handler.spec_handler import SpecHandler
-from tap_occ_products.record.handler.stock_point_handler import StockPointHandler
+from tap_sap_commerce_cloud.record.record import Record
+from tap_sap_commerce_cloud.record.handler.category_handler import CategoryHandler
+from tap_sap_commerce_cloud.record.handler.customer_specific_price_handler import CustomerSpecificPriceHandler
+from tap_sap_commerce_cloud.record.handler.price_point_handler import PricePointHandler
+from tap_sap_commerce_cloud.record.handler.product_handler import ProductHandler
+from tap_sap_commerce_cloud.record.handler.product_spec_handler import ProductSpecHandler
+from tap_sap_commerce_cloud.record.handler.spec_handler import SpecHandler
+from tap_sap_commerce_cloud.record.handler.stock_point_handler import StockPointHandler
 
 
 def build_record_handler(record: Record):
