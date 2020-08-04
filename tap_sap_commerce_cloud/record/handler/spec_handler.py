@@ -26,5 +26,7 @@ class SpecHandler(BaseHandler):
             'name': spec.get('name'),
             'unitName': spec.get('featureUnit', {}).get('name'),
             'unitSymbol': spec.get('featureUnit', {}).get('symbol'),
-            'comparable': spec.get('comparable')
+            'comparable': spec.get('comparable'),
+            'majorityUnitName' : None,
+            'majorityUnitSymbol': None
         }
