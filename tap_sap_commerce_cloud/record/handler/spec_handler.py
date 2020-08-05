@@ -17,7 +17,9 @@ class SpecHandler(BaseHandler):
             return self._handled_codes.get(code)
 
         self._code += 1
-        spec_id = options.get('tenant_id') + str(self._code)
+
+        #chagne ID format to ex.t1-111
+        spec_id = options.get('tenant_id') + "-" + str(self._code)
 
         self._handled_codes[code] = spec_id
 
