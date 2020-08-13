@@ -35,15 +35,15 @@ class TestSpecHandler(unittest.TestCase):
             {
                 'id': 't11',
                 'name': 'weight',
-                'unitName': 'kilogram',
-                'unitSymbol': 'kg',
+                'baseUnitName': 'kilogram',
+                'baseUnitSymbol': 'kg',
                 'comparable': True
             },
             {
                 'id': 't12',
                 'name': 'color',
-                'unitName': '.',
-                'unitSymbol': '.',
+                'baseUnitName': '.',
+                'baseUnitSymbol': '.',
                 'comparable': True
             }
         ])
