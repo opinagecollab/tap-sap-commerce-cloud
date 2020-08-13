@@ -7,14 +7,20 @@
     "name": {
       "type": ["null", "string"]
     },
-    "unitName": {
+    "baseUnitName": {
       "type": ["null", "string"]
     },
-    "unitSymbol": {
+    "baseUnitSymbol": {
       "type": ["null", "string"]
     },
     "comparable": {
       "type": ["null", "boolean"]
+    },
+    "majorityUnitName": {
+       "type": ["null", "string"]
+    },
+    "majorityUnitSymbol": {
+      "type": ["null", "string"]
     }
   },
   "additionalProperties": false

@@ -17,14 +17,18 @@ class SpecHandler(BaseHandler):
             return self._handled_codes.get(code)
 
         self._code += 1
-        spec_id = options.get('tenant_id') + str(self._code)
+
+        #change ID format to ex.t1-111
+        spec_id = options.get('tenant_id') + "-" + str(self._code)
 
         self._handled_codes[code] = spec_id
 
         return {
             'id': spec_id,
             'name': spec.get('name'),
-            'unitName': spec.get('featureUnit', {}).get('name'),
-            'unitSymbol': spec.get('featureUnit', {}).get('symbol'),
-            'comparable': spec.get('comparable')
+            'baseUnitName': spec.get('featureUnit', {}).get('name'),
+            'baseUnitSymbol': spec.get('featureUnit', {}).get('symbol'),
+            'comparable': spec.get('comparable'),
+            'majorityUnitName' : None,
+            'majorityUnitSymbol': None
         }
