@@ -33,18 +33,22 @@ class TestSpecHandler(unittest.TestCase):
 
         self.assertEqual(specs, [
             {
-                'id': 't11',
+                'id': 't1-1',
                 'name': 'weight',
                 'baseUnitName': 'kilogram',
                 'baseUnitSymbol': 'kg',
-                'comparable': True
+                'comparable': True,
+                'majorityUnitName' : None,
+                'majorityUnitSymbol': None
             },
             {
-                'id': 't12',
+                'id': 't1-2',
                 'name': 'color',
                 'baseUnitName': '.',
                 'baseUnitSymbol': '.',
-                'comparable': True
+                'comparable': True,
+                'majorityUnitName' : None,
+                'majorityUnitSymbol': None
             }
         ])
 
@@ -60,4 +64,4 @@ class TestSpecHandler(unittest.TestCase):
                 }
             },
             tenant_id='t1'
-        ), 't11')
+        ), 't1-1')

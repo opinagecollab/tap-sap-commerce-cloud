@@ -6,6 +6,7 @@ class Record(Enum):
     CUSTOMER_SPECIFIC_PRICE = 'customer_specific_price'
     PRICE_POINT = 'price_point'
     PRODUCT = 'product'
+    CATEGORY_PRODUCT = 'category_product'
     PRODUCT_SPEC = 'product_spec'
     SPEC = 'spec'
     STOCK_POINT = 'stock_point'
