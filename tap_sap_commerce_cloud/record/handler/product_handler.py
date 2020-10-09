@@ -11,7 +11,6 @@ class ProductHandler(BaseHandler):
         return {
             'sku': product.get('code'),
             'tenantId': options.get('tenant_id'),
-            'categoryId': options.get('category_id'),
             'regularPrice': product.get('price', {}).get('value'),
             'salePrice': None,
             'currency': product.get('price', {}).get('currencyIso'),

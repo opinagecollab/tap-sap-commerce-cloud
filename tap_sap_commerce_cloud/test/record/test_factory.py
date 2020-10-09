@@ -4,6 +4,7 @@ from tap_sap_commerce_cloud.record.factory import build_record_handler
 from tap_sap_commerce_cloud.record.record import Record
 
 from tap_sap_commerce_cloud.record.handler.category_handler import CategoryHandler
+from tap_sap_commerce_cloud.record.handler.category_product_handler import CategoryProductHandler
 from tap_sap_commerce_cloud.record.handler.customer_specific_price_handler import CustomerSpecificPriceHandler
 from tap_sap_commerce_cloud.record.handler.price_point_handler import PricePointHandler
 from tap_sap_commerce_cloud.record.handler.product_handler import ProductHandler
@@ -17,6 +18,10 @@ class TestFactory(unittest.TestCase):
     def test_should_build_category_handler(self):
         category_handler = build_record_handler(Record.CATEGORY)
         self.assertTrue(isinstance(category_handler, CategoryHandler))
+
+    def test_should_build_category_product_handler(self): 
+        category_product_handler = build_record_handler(Record.CATEGORY_PRODUCT)
+        self.assertTrue(isinstance(category_product_handler, CategoryProductHandler))
 
     def test_should_build_customer_specific_price_handler(self):
         customer_specific_price_handler = build_record_handler(Record.CUSTOMER_SPECIFIC_PRICE)

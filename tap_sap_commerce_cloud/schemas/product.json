@@ -7,9 +7,6 @@
     "tenantId": {
       "type": "string"
     },
-    "categoryId": {
-      "type": "string"
-    },
     "regularPrice": {
       "type": "number"
     },

@@ -82,7 +82,6 @@ class TestProductHandler(unittest.TestCase):
             {
                 'sku': '123456',
                 'tenantId': 't1',
-                'categoryId': 't11',
                 'regularPrice': 1.23,
                 'currency': 'USD',
                 'salePrice': None,
@@ -99,7 +98,6 @@ class TestProductHandler(unittest.TestCase):
             {
                 'sku': '234567',
                 'tenantId': 't1',
-                'categoryId': 't12',
                 'regularPrice': 3.70,
                 'salePrice': None,
                 'currency': 'USD',

@@ -1,0 +1,15 @@
+{
+    "type": "object",
+    "properties": {
+      "sku": {
+        "type": "string"
+      },
+      "tenantId": {
+        "type": "string"
+      },
+      "categoryId": {
+        "type": "string"
+      }
+    },
+    "additionalProperties": false
+  }

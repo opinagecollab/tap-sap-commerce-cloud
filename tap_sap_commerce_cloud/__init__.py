@@ -63,6 +63,12 @@ def discover():
         if schema_name == Record.CATEGORY.value:
             stream_metadata.append(is_selected)
             stream_key_properties.append('id')
+        
+        if schema_name == Record.CATEGORY_PRODUCT.value:
+            stream_metadata.append(is_selected)
+            stream_key_properties.append('sku')
+            stream_key_properties.append('tenantId')
+            stream_key_properties.append('categoryId')
 
         if schema_name == Record.CUSTOMER_SPECIFIC_PRICE.value:
             stream_metadata.append(is_selected)
@@ -161,6 +167,17 @@ def sync(config, state, catalog):
             product_stream['tap_stream_id'],
             product_stream['schema'],
             product_stream['key_properties'])
+    
+    if Record.CATEGORY_PRODUCT.value in selected_stream_ids:
+        category_product_stream = \
+            next(filter(lambda stream: stream['tap_stream_id'] == Record.CATEGORY_PRODUCT.value, catalog['streams']))
+        LOGGER.debug('Writing category_product schema: \n {} \n and key properties: {}'.format(
+            category_product_stream['schema'],
+            category_product_stream['key_properties']))
+        singer.write_schema(
+            category_product_stream['tap_stream_id'],
+            category_product_stream['schema'],
+            category_product_stream['key_properties'])
 
     if Record.PRODUCT_SPEC.value in selected_stream_ids:
         product_spec_stream = \
@@ -216,28 +233,38 @@ def sync(config, state, catalog):
             LOGGER.info('Product has no category! Skipping ...')
             continue
 
-        if len(product.get('categories', [])) == 0:
+        categories = product.get('categories', [])
+        if len(categories) == 0:
             LOGGER.info('Product has no category! Skipping ...')
             continue
 
-        category = product.get('categories')[0]
-        category_record = build_record_handler(Record.CATEGORY).generate(category, tenant_id=tenant_id)
-
-        # category record builder returns a record if the category hasn't been handled yet
-        # otherwise, it returns the id of an already handled category record
-        if isinstance(category_record, dict):
-            category_id = category_record.get('id')
-
-            LOGGER.debug('Writing category record: {}'.format(category_record))
-            singer.write_record(Record.CATEGORY.value, category_record)
-        else:
-            category_id = category_record
-
         product_record = \
             build_record_handler(Record.PRODUCT).generate(
-                product, tenant_id=tenant_id, category_id=category_id, config=config)
+                product, tenant_id=tenant_id, config=config)
         LOGGER.debug('Writing product record: {}'.format(product_record))
         singer.write_record(Record.PRODUCT.value, product_record)
+
+        for category in categories: 
+            if category.get('name') == None: 
+                continue
+            
+            category_record = build_record_handler(Record.CATEGORY).generate(category, tenant_id=tenant_id)
+
+            # category record builder returns a record if the category hasn't been handled yet
+            # otherwise, it returns the id of an already handled category record
+            if isinstance(category_record, dict):
+                category_id = category_record.get('id')
+
+                LOGGER.debug('Writing category record: {}'.format(category_record))
+                singer.write_record(Record.CATEGORY.value, category_record)
+            else:
+                category_id = category_record
+            
+            category_product_record = build_record_handler(Record.CATEGORY_PRODUCT).generate(
+                tenant_id=tenant_id, sku=product.get('code'), category_id=category_id)
+            
+            LOGGER.debug('Writing category_product record: {}'.format(category_product_record))
+            singer.write_record(Record.CATEGORY_PRODUCT.value, category_product_record)
 
         if 'classifications' in product:
             for classification in product['classifications']:
